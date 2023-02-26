@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Main;
+import Controller.Secure;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -204,6 +205,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     public Main main;
+    public Secure secure = new Secure();
     public Login loginPnl = new Login();
     public Register registerPnl = new Register();
     

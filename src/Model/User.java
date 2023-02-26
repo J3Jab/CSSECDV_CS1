@@ -7,6 +7,11 @@ public class User {
     private int role = 2;
     private int locked = 0;
 
+    
+    public User(){
+        this.id = 0;
+    }
+    
     public User(String username, String password){
         this.username = username;
         this.password = password;

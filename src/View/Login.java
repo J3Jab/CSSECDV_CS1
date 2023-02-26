@@ -1,9 +1,13 @@
 
 package View;
 
+import Controller.Secure;
+import javax.swing.JOptionPane;
+
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
+    public Secure secure;
     
     public Login() {
         initComponents();
@@ -15,7 +19,7 @@ public class Login extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         usernameFld = new javax.swing.JTextField();
-        passwordFld = new javax.swing.JTextField();
+        passwordFld = new javax.swing.JPasswordField();
         registerBtn = new javax.swing.JButton();
         loginBtn = new javax.swing.JButton();
 
@@ -83,10 +87,23 @@ public class Login extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        frame.mainNav();
+        if(frame.main.sqlite.checkUser(usernameFld.getText(), passwordFld.getText())){
+            usernameFld.setText("");
+            passwordFld.setText("");
+            frame.mainNav(); 
+        }
+        
+        else{
+            passwordFld.setText("");
+            JOptionPane.showMessageDialog(null, "Invalid Username and password combination", "Error: Login", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        usernameFld.setText("");
+        passwordFld.setText("");
         frame.registerNav();
     }//GEN-LAST:event_registerBtnActionPerformed
 
