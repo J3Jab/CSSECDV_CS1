@@ -23,11 +23,11 @@ public class Register extends javax.swing.JPanel {
         confpassFld = new javax.swing.JPasswordField();
         backBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbl_length = new javax.swing.JLabel();
         lbl_uppercase = new javax.swing.JLabel();
         lbl_lowercase = new javax.swing.JLabel();
         lbl_number = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lbl_specialChar = new javax.swing.JLabel();
 
         registerBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         registerBtn.setText("REGISTER");
@@ -72,7 +72,7 @@ public class Register extends javax.swing.JPanel {
 
         jLabel2.setText("Password Requirements ");
 
-        jLabel3.setText("At least 12 characters");
+        lbl_length.setText("At least 12 characters");
 
         lbl_uppercase.setText("At least one uppercase letter");
 
@@ -80,7 +80,7 @@ public class Register extends javax.swing.JPanel {
 
         lbl_number.setText("At least one numeric character");
 
-        jLabel7.setText("At least one special character");
+        lbl_specialChar.setText("At least one special character");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,7 +108,7 @@ public class Register extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(6, 6, 6)
-                                    .addComponent(jLabel3))
+                                    .addComponent(lbl_length))
                                 .addComponent(jLabel2))
                             .addGap(27, 27, 27))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -117,7 +117,7 @@ public class Register extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_lowercase, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_specialChar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_number, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
@@ -142,7 +142,7 @@ public class Register extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(lbl_length)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_uppercase)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,7 +150,7 @@ public class Register extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_number)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
+                        .addComponent(lbl_specialChar)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -158,6 +158,9 @@ public class Register extends javax.swing.JPanel {
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
             JOptionPane.showMessageDialog(null, "Error password and confirm password are not the same", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!checkString(passwordFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error password does not meet requirements", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else{
             usernameFld.setText("");
@@ -176,14 +179,23 @@ public class Register extends javax.swing.JPanel {
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void checkString(String str) {
+    private boolean checkString(String str) {
     char ch;
     boolean upperCaseFlag = false;
     boolean lowerCaseFlag = false;
     boolean numberFlag = false;
+    boolean lengthFlag = false;
+    boolean specialFlag = false;
+    
+    String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
+    
+    if(str.length() >= 12){
+        lengthFlag = true;
+        lbl_length.setForeground(Color.green);
+    }
     for(int i=0;i < str.length();i++) {
         ch = str.charAt(i);
-        if( Character.isDigit(ch)) {
+        if(Character.isDigit(ch)) {
             numberFlag = true;
             lbl_number.setForeground(Color.green);
         }
@@ -194,19 +206,33 @@ public class Register extends javax.swing.JPanel {
         if (Character.isLowerCase(ch)) {
             lowerCaseFlag = true;
             lbl_lowercase.setForeground(Color.green);
-        }
+        } 
         
-        if(!numberFlag)
+        if(specialCharactersString.contains(Character.toString(ch))) {
+            specialFlag = true;
+            lbl_specialChar.setForeground(Color.green);
+        }
+    }
+    
+    if(!numberFlag)
             lbl_number.setForeground(Color.red);
         
-        if(!upperCaseFlag)
-            lbl_uppercase.setForeground(Color.red);
-        
-        if(!lowerCaseFlag)
-            lbl_lowercase.setForeground(Color.red);
-            
-    }
+    if(!upperCaseFlag)
+        lbl_uppercase.setForeground(Color.red);
 
+    if(!lowerCaseFlag)
+        lbl_lowercase.setForeground(Color.red);
+
+    if(!lengthFlag)
+        lbl_length.setForeground(Color.red);
+    
+    if(!specialFlag)
+        lbl_specialChar.setForeground(Color.red);
+    
+    if(numberFlag && upperCaseFlag && lowerCaseFlag && lengthFlag && specialFlag)
+        return true;
+    else
+        return false;
 }
     private void passwordFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFldKeyReleased
        checkString(passwordFld.getText());
@@ -218,10 +244,10 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JTextField confpassFld;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lbl_length;
     private javax.swing.JLabel lbl_lowercase;
     private javax.swing.JLabel lbl_number;
+    private javax.swing.JLabel lbl_specialChar;
     private javax.swing.JLabel lbl_uppercase;
     private javax.swing.JTextField passwordFld;
     private javax.swing.JButton registerBtn;
