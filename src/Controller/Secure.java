@@ -22,4 +22,5 @@ public class Secure {
     public boolean chkIfSame(String first, String second){
         return(first.equals(second));
     }
+   
 }

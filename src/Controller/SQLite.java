@@ -331,6 +331,34 @@ public class SQLite {
         return false;
     }
     
+    public boolean checkIfUsernameTaken(String username){
+        String sql = "SELECT id, username, password, role, locked FROM users WHERE username=?";
+        User user = new User();
+            
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                user = new User(rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getInt("role"),
+                        rs.getInt("locked"));
+            }
+            if(user.getId() != 0)
+                return true;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    
+    
     public Product getProduct(String name){
         String sql = "SELECT name, stock, price FROM product WHERE name='" + name + "';";
         Product product = null;
