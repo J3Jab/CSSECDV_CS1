@@ -209,6 +209,9 @@ public class Frame extends javax.swing.JFrame {
     public Login loginPnl = new Login();
     public Register registerPnl = new Register();
     
+    ////
+    public ForgetPword forgetpwordPnl = new ForgetPword();
+    
     private AdminHome adminHomePnl = new AdminHome();
     private ManagerHome managerHomePnl = new ManagerHome();
     private StaffHome staffHomePnl = new StaffHome();
@@ -226,6 +229,9 @@ public class Frame extends javax.swing.JFrame {
         loginPnl.frame = this;
         registerPnl.frame = this;
         
+        ////
+        forgetpwordPnl.frame = this;
+                
         adminHomePnl.init(main.sqlite);
         clientHomePnl.init(main.sqlite);
         managerHomePnl.init(main.sqlite);
@@ -235,6 +241,10 @@ public class Frame extends javax.swing.JFrame {
         Container.add(loginPnl, "loginPnl");
         Container.add(registerPnl, "registerPnl");
         Container.add(HomePnl, "homePnl");
+        
+        ////
+        Container.add(forgetpwordPnl, "forgetpwordPnl");
+        
         frameView.show(Container, "loginPnl");
         
         Content.setLayout(contentView);
@@ -256,6 +266,11 @@ public class Frame extends javax.swing.JFrame {
     
     public void registerNav(){
         frameView.show(Container, "registerPnl");
+    }
+    
+    ////
+    public void forgetpwordNav(){
+        frameView.show(Container, "forgetpwordPnl");
     }
     
     public void registerAction(String username, String password, String confpass){
