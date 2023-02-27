@@ -101,6 +101,7 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if(frame.main.sqlite.checkUser(usernameFld.getText(), passwordFld.getText())){
+            frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
             usernameFld.setText("");
             passwordFld.setText("");
             frame.mainNav(); 
@@ -108,6 +109,7 @@ public class Login extends javax.swing.JPanel {
         
         else{
             passwordFld.setText("");
+            frame.main.sqlite.addLogs("LOGIN FAIL", usernameFld.getText(), "User Login Failure", null);
             JOptionPane.showMessageDialog(null, "Invalid Username and password combination", "Error: Login", JOptionPane.ERROR_MESSAGE);
         }
         

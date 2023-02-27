@@ -10,7 +10,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SQLite {
     
@@ -159,11 +161,15 @@ public class SQLite {
     }
     
     public void addLogs(String event, String username, String desc, String timestamp) {
-        String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES('" + event + "','" + username + "','" + desc + "','" + timestamp + "')";
+        String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES(?, ?, ?, ?)";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
-            Statement stmt = conn.createStatement()){
-            stmt.execute(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, event);
+            stmt.setString(2, username);
+            stmt.setString(3, desc);
+            stmt.setString(4, timestamp == null ? new Timestamp(new Date().getTime()).toString():timestamp);
+            stmt.executeUpdate();
         } catch (Exception ex) {
             System.out.print(ex);
         }

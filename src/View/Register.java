@@ -33,6 +33,7 @@ public class Register extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        lbl_whiteSpace = new javax.swing.JLabel();
 
         registerBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         registerBtn.setText("REGISTER");
@@ -84,18 +85,23 @@ public class Register extends javax.swing.JPanel {
         lbl_length.setText("At least 12 characters");
 
         lbl_uppercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_uppercase.setText("At least one uppercase letter");
+        lbl_uppercase.setText("At least one uppercase letter [A-Z]");
 
         lbl_lowercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_lowercase.setText("At least one lowercase letter");
+        lbl_lowercase.setText("At least one lowercase letter [a-z]");
 
         lbl_number.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_number.setText("At least one numeric character");
+        lbl_number.setText("At least one numeric character [0-9]");
 
         lbl_specialChar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_specialChar.setText("At least one special character");
+        lbl_specialChar.setText("At least one special character (i.e. !@#$%&*()'+,-./)");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of your first dog?", "What is your mother's maiden name?", "Where were you born?" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("SECURITY QUESTION");
 
@@ -106,6 +112,9 @@ public class Register extends javax.swing.JPanel {
                 jTextField1ActionPerformed(evt);
             }
         });
+
+        lbl_whiteSpace.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_whiteSpace.setText("Should not contain white spaces");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,12 +144,13 @@ public class Register extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl_length, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                                     .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(82, 82, 82)
@@ -180,7 +190,9 @@ public class Register extends javax.swing.JPanel {
                     .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(registerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(42, 42, 42))
@@ -188,23 +200,36 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error password and confirm password are not the same", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+        boolean registerFlag = false;
+        
+        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+        }
+        if(usernameFld.getText().contains(" ")){
+            JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else if (!checkString(passwordFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error password does not meet requirements", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error username already taken", "Error: Registration", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else{
             frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText());
+            frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
             frame.loginNav();
+            registerFlag = true;
         }
         
+        if(!registerFlag){
+            frame.main.sqlite.addLogs("REGISTER FAIL", usernameFld.getText(), "User Registration Failure", null);
+        }
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -221,6 +246,7 @@ public class Register extends javax.swing.JPanel {
     boolean numberFlag = false;
     boolean lengthFlag = false;
     boolean specialFlag = false;
+    boolean whiteSpaceFlag = false;
     
     String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
     
@@ -230,6 +256,10 @@ public class Register extends javax.swing.JPanel {
     }
     for(int i=0;i < str.length();i++) {
         ch = str.charAt(i);
+        if(Character.isWhitespace(ch)){
+            whiteSpaceFlag = true;
+            lbl_whiteSpace.setForeground(Color.red);
+        }
         if(Character.isDigit(ch)) {
             numberFlag = true;
             lbl_number.setForeground(Color.green.darker());
@@ -248,6 +278,9 @@ public class Register extends javax.swing.JPanel {
             lbl_specialChar.setForeground(Color.green.darker());
         }
     }
+    
+    if(!whiteSpaceFlag)
+        lbl_whiteSpace.setForeground(Color.green.darker());
     
     if(!numberFlag)
             lbl_number.setForeground(Color.red);
@@ -277,6 +310,10 @@ public class Register extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
@@ -292,6 +329,7 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_number;
     private javax.swing.JLabel lbl_specialChar;
     private javax.swing.JLabel lbl_uppercase;
+    private javax.swing.JLabel lbl_whiteSpace;
     private javax.swing.JTextField passwordFld;
     private javax.swing.JButton registerBtn;
     private javax.swing.JTextField usernameFld;

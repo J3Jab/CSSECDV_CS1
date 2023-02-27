@@ -43,13 +43,14 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_length" max="32767" attributes="0"/>
-                                  <Component id="lbl_uppercase" pref="250" max="32767" attributes="0"/>
+                                  <Component id="lbl_uppercase" pref="231" max="32767" attributes="0"/>
                                   <Component id="lbl_lowercase" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lbl_number" pref="250" max="32767" attributes="0"/>
+                                  <Component id="lbl_number" max="32767" attributes="0"/>
                                   <Component id="lbl_specialChar" max="32767" attributes="0"/>
+                                  <Component id="lbl_whiteSpace" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
@@ -101,7 +102,10 @@
                   <Component id="lbl_specialChar" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="lbl_lowercase" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbl_lowercase" alignment="3" max="32767" attributes="0"/>
+                  <Component id="lbl_whiteSpace" alignment="3" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="registerBtn" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
@@ -233,25 +237,25 @@
     <Component class="javax.swing.JLabel" name="lbl_uppercase">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one uppercase letter"/>
+        <Property name="text" type="java.lang.String" value="At least one uppercase letter [A-Z]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_lowercase">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one lowercase letter"/>
+        <Property name="text" type="java.lang.String" value="At least one lowercase letter [a-z]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_number">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one numeric character"/>
+        <Property name="text" type="java.lang.String" value="At least one numeric character [0-9]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_specialChar">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one special character"/>
+        <Property name="text" type="java.lang.String" value="At least one special character (i.e. !@#$%&amp;*()&apos;+,-./)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
@@ -264,6 +268,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -282,6 +289,12 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_whiteSpace">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Should not contain white spaces"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
