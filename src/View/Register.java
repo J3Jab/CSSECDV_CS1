@@ -29,10 +29,10 @@ public class Register extends javax.swing.JPanel {
         lbl_lowercase = new javax.swing.JLabel();
         lbl_number = new javax.swing.JLabel();
         lbl_specialChar = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        SecQuestionFld = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        SecAnswerFld = new javax.swing.JTextField();
         lbl_whiteSpace = new javax.swing.JLabel();
 
         registerBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -96,10 +96,10 @@ public class Register extends javax.swing.JPanel {
         lbl_specialChar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_specialChar.setText("At least one special character (i.e. !@#$%&*()'+,-./)");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of your first dog?", "What is your mother's maiden name?", "Where were you born?" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        SecQuestionFld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of your first dog?", "What is your mother's maiden name?", "Where were you born?" }));
+        SecQuestionFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                SecQuestionFldActionPerformed(evt);
             }
         });
 
@@ -107,9 +107,9 @@ public class Register extends javax.swing.JPanel {
 
         jLabel4.setText("Your Answer");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        SecAnswerFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                SecAnswerFldActionPerformed(evt);
             }
         });
 
@@ -132,11 +132,11 @@ public class Register extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(SecAnswerFld))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(SecQuestionFld, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                             .addComponent(passwordFld, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(usernameFld, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -173,12 +173,12 @@ public class Register extends javax.swing.JPanel {
                 .addComponent(confpassFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SecQuestionFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SecAnswerFld, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -202,10 +202,10 @@ public class Register extends javax.swing.JPanel {
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         boolean registerFlag = false;
         
-        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty()){
+        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty() || SecAnswerFld.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
-        if(usernameFld.getText().contains(" ")){
+        else if(usernameFld.getText().contains(" ")){
             JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
@@ -218,7 +218,7 @@ public class Register extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText());
+            frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), SecAnswerFld.getText());
             frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
             usernameFld.setText("");
             passwordFld.setText("");
@@ -306,24 +306,24 @@ public class Register extends javax.swing.JPanel {
        checkString(passwordFld.getText());
     }//GEN-LAST:event_passwordFldKeyReleased
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void SecAnswerFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecAnswerFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_SecAnswerFldActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void SecQuestionFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecQuestionFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_SecQuestionFldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField SecAnswerFld;
+    private javax.swing.JComboBox<String> SecQuestionFld;
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField confpassFld;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_length;
     private javax.swing.JLabel lbl_lowercase;
     private javax.swing.JLabel lbl_number;

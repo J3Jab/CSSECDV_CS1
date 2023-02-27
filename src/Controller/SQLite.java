@@ -186,8 +186,8 @@ public class SQLite {
         }
     }
     
-    public void addUser(String username, String password) {
-        String sql = "INSERT INTO users(username,password) VALUES('" + username + "','" + password + "')";
+    public void addUser(String username, String password, String SecQuestion, String SecAnswer) {
+        String sql = "INSERT INTO users(username,password, SecQuestion, SecAnswer) VALUES('" + username + "','" + password + "' ,'" + SecQuestion + "','" + SecAnswer + "')";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()){
@@ -268,7 +268,7 @@ public class SQLite {
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked FROM users";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer FROM users";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -280,7 +280,9 @@ public class SQLite {
                                    rs.getString("username"),
                                    rs.getString("password"),
                                    rs.getInt("role"),
-                                   rs.getInt("locked")));
+                                   rs.getInt("locked"),
+                                   rs.getString("SecQuestion"),
+                                   rs.getString("SecAnswer")));
             }
         } catch (Exception ex) {}
         return users;
@@ -311,7 +313,7 @@ public class SQLite {
     }
     
     public boolean checkUser(String username, String password){
-        String sql = "SELECT id, username, password, role, locked FROM users WHERE username=? AND password=?";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer FROM users WHERE username=? AND password=?";
         User user = new User();
             
         try{
@@ -326,7 +328,9 @@ public class SQLite {
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getInt("role"),
-                        rs.getInt("locked"));
+                        rs.getInt("locked"),
+                        rs.getString("SecQuestion"),
+                        rs.getString("SecAnswer"));
             }
             if(user.getId() != 0)
                 return true;
@@ -338,7 +342,7 @@ public class SQLite {
     }
     
     public boolean checkIfUsernameTaken(String username){
-        String sql = "SELECT id, username, password, role, locked FROM users WHERE username=? COLLATE NOCASE";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer FROM users WHERE username=? COLLATE NOCASE";
         User user = new User();
             
         try{
@@ -352,7 +356,9 @@ public class SQLite {
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getInt("role"),
-                        rs.getInt("locked"));
+                        rs.getInt("locked"),
+                        rs.getString("SecQuestion"),
+                        rs.getString("SecAnswer"));
             }
             if(user.getId() != 0)
                 return true;
