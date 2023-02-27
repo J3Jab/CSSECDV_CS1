@@ -210,6 +210,8 @@ public class Frame extends javax.swing.JFrame {
     public Register registerPnl = new Register();
     
     ////
+    public EnterUsername enterusernamePnl = new EnterUsername();
+    public Verify verifyPnl = new Verify();
     public ForgetPword forgetpwordPnl = new ForgetPword();
     
     private AdminHome adminHomePnl = new AdminHome();
@@ -230,6 +232,8 @@ public class Frame extends javax.swing.JFrame {
         registerPnl.frame = this;
         
         ////
+        enterusernamePnl.frame = this;
+        verifyPnl.frame = this;
         forgetpwordPnl.frame = this;
                 
         adminHomePnl.init(main.sqlite);
@@ -243,7 +247,10 @@ public class Frame extends javax.swing.JFrame {
         Container.add(HomePnl, "homePnl");
         
         ////
+        Container.add(enterusernamePnl, "enterusernamePnl");
+        Container.add(verifyPnl, "verifyPnl");
         Container.add(forgetpwordPnl, "forgetpwordPnl");
+        
         
         frameView.show(Container, "loginPnl");
         
@@ -269,6 +276,14 @@ public class Frame extends javax.swing.JFrame {
     }
     
     ////
+    public void enterusernameNav(){
+        frameView.show(Container, "enterusernamePnl");
+    }
+    
+    public void verifyNav(){
+        frameView.show(Container, "verifyPnl");
+    }
+    
     public void forgetpwordNav(){
         frameView.show(Container, "forgetpwordPnl");
     }

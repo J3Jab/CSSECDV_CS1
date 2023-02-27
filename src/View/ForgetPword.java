@@ -41,7 +41,6 @@ public class ForgetPword extends javax.swing.JPanel {
 
         backBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        usernameFld = new javax.swing.JTextField();
         resetpwordBtn = new javax.swing.JButton();
         passwordFld = new javax.swing.JPasswordField();
         confpassFld = new javax.swing.JPasswordField();
@@ -51,9 +50,6 @@ public class ForgetPword extends javax.swing.JPanel {
         lbl_specialChar = new javax.swing.JLabel();
         lbl_uppercase = new javax.swing.JLabel();
         lbl_lowercase = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        SecAnswerFld = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         lbl_whiteSpace = new javax.swing.JLabel();
 
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -68,11 +64,6 @@ public class ForgetPword extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("SECURITY Scvs");
 
-        usernameFld.setBackground(new java.awt.Color(240, 240, 240));
-        usernameFld.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        usernameFld.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernameFld.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "USERNAME", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
-
         resetpwordBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         resetpwordBtn.setText("RESET PASSWORD");
         resetpwordBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +76,11 @@ public class ForgetPword extends javax.swing.JPanel {
         passwordFld.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         passwordFld.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         passwordFld.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "PASSWORD", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        passwordFld.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFldActionPerformed(evt);
+            }
+        });
         passwordFld.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 passwordFldKeyReleased(evt);
@@ -116,17 +112,6 @@ public class ForgetPword extends javax.swing.JPanel {
         lbl_lowercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_lowercase.setText("At least one lowercase letter [a-z]");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("QUESTION");
-
-        SecAnswerFld.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SecAnswerFldActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Your Answer");
-
         lbl_whiteSpace.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_whiteSpace.setText("Must not contain white spaces");
 
@@ -135,37 +120,31 @@ public class ForgetPword extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(resetpwordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(210, 210, 210))
+                .addGap(122, 122, 122)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_length, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                            .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordFld)
+                    .addComponent(confpassFld)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(130, 130, 130))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(backBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_length, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(usernameFld)
-                    .addComponent(passwordFld)
-                    .addComponent(confpassFld)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SecAnswerFld)))
-                .addGap(130, 130, 130))
+                .addGap(207, 207, 207)
+                .addComponent(resetpwordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(191, 191, 191))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,19 +153,11 @@ public class ForgetPword extends javax.swing.JPanel {
                 .addComponent(backBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(usernameFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
                 .addComponent(passwordFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(confpassFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SecAnswerFld, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,9 +171,9 @@ public class ForgetPword extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_lowercase)
                     .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(resetpwordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                .addGap(31, 31, 31))
+                .addGap(33, 33, 33)
+                .addComponent(resetpwordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,48 +182,48 @@ public class ForgetPword extends javax.swing.JPanel {
     }//GEN-LAST:event_passwordFldKeyReleased
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        usernameFld.setText("");
+
         passwordFld.setText("");
         confpassFld.setText("");
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void SecAnswerFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecAnswerFldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SecAnswerFldActionPerformed
-
     private void resetpwordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetpwordBtnActionPerformed
-        boolean resetFlag = false;
-        
-        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty() || SecAnswerFld.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(usernameFld.getText().contains(" ")){
-            JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-        }
-        else if (!checkString(passwordFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-        }
-        else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
-            JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-            //frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), Secure.encrypt(SecAnswerFld.getText()));
-            frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
-            usernameFld.setText("");
-            passwordFld.setText("");
-            confpassFld.setText("");
-            frame.loginNav();
-            resetFlag = true;
-        }
-        
-        if(!resetFlag){
-            frame.main.sqlite.addLogs("REGISTER FAIL", usernameFld.getText(), "User Registration Failure", null);
-        }
+//        boolean resetFlag = false;
+//        
+//        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty() || SecAnswerFld.getText().isEmpty()){
+//            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else if(usernameFld.getText().contains(" ")){
+//            JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
+//            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else if (!checkString(passwordFld.getText())){
+//            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
+//            JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else{
+//            //frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), Secure.encrypt(SecAnswerFld.getText()));
+//            frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
+//            usernameFld.setText("");
+//            passwordFld.setText("");
+//            confpassFld.setText("");
+//            frame.loginNav();
+//            resetFlag = true;
+//        }
+//        
+//        if(!resetFlag){
+//            frame.main.sqlite.addLogs("REGISTER FAIL", usernameFld.getText(), "User Registration Failure", null);
+//        }
     }//GEN-LAST:event_resetpwordBtnActionPerformed
+
+    private void passwordFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFldActionPerformed
 
      private boolean checkString(String str) {
     char ch;
@@ -319,13 +290,10 @@ public class ForgetPword extends javax.swing.JPanel {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField SecAnswerFld;
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField confpassFld;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbl_length;
     private javax.swing.JLabel lbl_lowercase;
     private javax.swing.JLabel lbl_number;
@@ -334,6 +302,5 @@ public class ForgetPword extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_whiteSpace;
     private javax.swing.JTextField passwordFld;
     private javax.swing.JButton resetpwordBtn;
-    private javax.swing.JTextField usernameFld;
     // End of variables declaration//GEN-END:variables
 }
