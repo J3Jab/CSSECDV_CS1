@@ -5,6 +5,7 @@
 package View;
 
 import Controller.Secure;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 /**
  *
@@ -51,8 +52,9 @@ public class ForgetPword extends javax.swing.JPanel {
         lbl_uppercase = new javax.swing.JLabel();
         lbl_lowercase = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        SecAnswerFld = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        lbl_whiteSpace = new javax.swing.JLabel();
 
         backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         backBtn.setText("<Back");
@@ -73,6 +75,11 @@ public class ForgetPword extends javax.swing.JPanel {
 
         resetpwordBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         resetpwordBtn.setText("RESET PASSWORD");
+        resetpwordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetpwordBtnActionPerformed(evt);
+            }
+        });
 
         passwordFld.setBackground(new java.awt.Color(240, 240, 240));
         passwordFld.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -98,27 +105,30 @@ public class ForgetPword extends javax.swing.JPanel {
         lbl_length.setText("At least 12 characters");
 
         lbl_number.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_number.setText("At least one numeric character");
+        lbl_number.setText("At least one numeric character [0-9]");
 
         lbl_specialChar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_specialChar.setText("At least one special character");
+        lbl_specialChar.setText("At least one special character (i.e. !@#$)");
 
         lbl_uppercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_uppercase.setText("At least one uppercase letter");
+        lbl_uppercase.setText("At least one uppercase letter [A-Z]");
 
         lbl_lowercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_lowercase.setText("At least one lowercase letter");
+        lbl_lowercase.setText("At least one lowercase letter [a-z]");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("QUESTION");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        SecAnswerFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                SecAnswerFldActionPerformed(evt);
             }
         });
 
         jLabel4.setText("Your Answer");
+
+        lbl_whiteSpace.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_whiteSpace.setText("Must not contain white spaces");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -144,7 +154,8 @@ public class ForgetPword extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(usernameFld)
                     .addComponent(passwordFld)
@@ -153,7 +164,7 @@ public class ForgetPword extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)))
+                        .addComponent(SecAnswerFld)))
                 .addGap(130, 130, 130))
         );
         layout.setVerticalGroup(
@@ -173,7 +184,7 @@ public class ForgetPword extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SecAnswerFld, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -186,13 +197,13 @@ public class ForgetPword extends javax.swing.JPanel {
                     .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_lowercase)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_lowercase)
+                    .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(resetpwordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
-
-        resetpwordBtn.getAccessibleContext().setAccessibleName("RESET PASSWORD");
     }// </editor-fold>//GEN-END:initComponents
 
     private void passwordFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFldKeyReleased
@@ -206,24 +217,121 @@ public class ForgetPword extends javax.swing.JPanel {
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void SecAnswerFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecAnswerFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_SecAnswerFldActionPerformed
 
+    private void resetpwordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetpwordBtnActionPerformed
+        boolean resetFlag = false;
+        
+        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty() || SecAnswerFld.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(usernameFld.getText().contains(" ")){
+            JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!checkString(passwordFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            //frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), Secure.encrypt(SecAnswerFld.getText()));
+            frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
+            usernameFld.setText("");
+            passwordFld.setText("");
+            confpassFld.setText("");
+            frame.loginNav();
+            resetFlag = true;
+        }
+        
+        if(!resetFlag){
+            frame.main.sqlite.addLogs("REGISTER FAIL", usernameFld.getText(), "User Registration Failure", null);
+        }
+    }//GEN-LAST:event_resetpwordBtnActionPerformed
+
+     private boolean checkString(String str) {
+    char ch;
+    boolean upperCaseFlag = false;
+    boolean lowerCaseFlag = false;
+    boolean numberFlag = false;
+    boolean lengthFlag = false;
+    boolean specialFlag = false;
+    boolean whiteSpaceFlag = false;
+    
+    String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
+    
+    if(str.length() >= 12){
+        lengthFlag = true;
+        lbl_length.setForeground(Color.green.darker());
+    }
+    for(int i=0;i < str.length();i++) {
+        ch = str.charAt(i);
+        if(Character.isWhitespace(ch)){
+            whiteSpaceFlag = true;
+            lbl_whiteSpace.setForeground(Color.red);
+        }
+        if(Character.isDigit(ch)) {
+            numberFlag = true;
+            lbl_number.setForeground(Color.green.darker());
+        }
+        if (Character.isUpperCase(ch)) {
+            upperCaseFlag = true;
+            lbl_uppercase.setForeground(Color.green.darker());
+        } 
+        if (Character.isLowerCase(ch)) {
+            lowerCaseFlag = true;
+            lbl_lowercase.setForeground(Color.green.darker());
+        } 
+        
+        if(specialCharactersString.contains(Character.toString(ch))) {
+            specialFlag = true;
+            lbl_specialChar.setForeground(Color.green.darker());
+        }
+    }
+    
+    if(!whiteSpaceFlag)
+        lbl_whiteSpace.setForeground(Color.green.darker());
+    
+    if(!numberFlag)
+            lbl_number.setForeground(Color.red);
+        
+    if(!upperCaseFlag)
+        lbl_uppercase.setForeground(Color.red);
+
+    if(!lowerCaseFlag)
+        lbl_lowercase.setForeground(Color.red);
+
+    if(!lengthFlag)
+        lbl_length.setForeground(Color.red);
+    
+    if(!specialFlag)
+        lbl_specialChar.setForeground(Color.red);
+    
+    if(numberFlag && upperCaseFlag && lowerCaseFlag && lengthFlag && specialFlag)
+        return true;
+    else
+        return false;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField SecAnswerFld;
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField confpassFld;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_length;
     private javax.swing.JLabel lbl_lowercase;
     private javax.swing.JLabel lbl_number;
     private javax.swing.JLabel lbl_specialChar;
     private javax.swing.JLabel lbl_uppercase;
+    private javax.swing.JLabel lbl_whiteSpace;
     private javax.swing.JTextField passwordFld;
     private javax.swing.JButton resetpwordBtn;
     private javax.swing.JTextField usernameFld;

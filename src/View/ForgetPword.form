@@ -40,6 +40,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbl_specialChar" max="32767" attributes="0"/>
                           <Component id="lbl_number" max="32767" attributes="0"/>
+                          <Component id="lbl_whiteSpace" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
@@ -50,7 +51,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField1" max="32767" attributes="0"/>
+                      <Component id="SecAnswerFld" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
@@ -74,7 +75,7 @@
               <Component id="jLabel1" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="SecAnswerFld" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -90,7 +91,10 @@
                   <Component id="lbl_specialChar" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="lbl_lowercase" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbl_lowercase" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_whiteSpace" alignment="3" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="resetpwordBtn" pref="51" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
@@ -147,9 +151,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="RESET PASSWORD"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="RESET PASSWORD"/>
-      </AccessibilityProperties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetpwordBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="passwordFld">
       <Properties>
@@ -221,25 +225,25 @@
     <Component class="javax.swing.JLabel" name="lbl_number">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one numeric character"/>
+        <Property name="text" type="java.lang.String" value="At least one numeric character [0-9]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_specialChar">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one special character"/>
+        <Property name="text" type="java.lang.String" value="At least one special character (i.e. !@#$)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_uppercase">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one uppercase letter"/>
+        <Property name="text" type="java.lang.String" value="At least one uppercase letter [A-Z]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_lowercase">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least one lowercase letter"/>
+        <Property name="text" type="java.lang.String" value="At least one lowercase letter [a-z]"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -250,14 +254,20 @@
         <Property name="text" type="java.lang.String" value="QUESTION"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="SecAnswerFld">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SecAnswerFldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Your Answer"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbl_whiteSpace">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Must not contain white spaces"/>
       </Properties>
     </Component>
   </SubComponents>

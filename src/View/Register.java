@@ -218,7 +218,7 @@ public class Register extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), SecAnswerFld.getText());
+            frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), Secure.encrypt(SecAnswerFld.getText()));
             frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
             usernameFld.setText("");
             passwordFld.setText("");
