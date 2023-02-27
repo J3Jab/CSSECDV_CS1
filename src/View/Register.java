@@ -1,6 +1,7 @@
 
 package View;
 
+import Controller.Secure;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -193,14 +194,14 @@ public class Register extends javax.swing.JPanel {
         else if (!checkString(passwordFld.getText())){
             JOptionPane.showMessageDialog(null, "Error password does not meet requirements", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
-        else if(!frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
+        else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
             JOptionPane.showMessageDialog(null, "Error username already taken", "Error: Registration", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText());
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
-            frame.registerAction(usernameFld.getText(), passwordFld.getText(), confpassFld.getText());
             frame.loginNav();
         }
         

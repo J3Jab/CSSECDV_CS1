@@ -312,7 +312,7 @@ public class SQLite {
             Connection conn = DriverManager.getConnection(driverURL);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(2, Secure.encrypt(password));
             
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -332,7 +332,7 @@ public class SQLite {
     }
     
     public boolean checkIfUsernameTaken(String username){
-        String sql = "SELECT id, username, password, role, locked FROM users WHERE username=?";
+        String sql = "SELECT id, username, password, role, locked FROM users WHERE username=? COLLATE NOCASE";
         User user = new User();
             
         try{
