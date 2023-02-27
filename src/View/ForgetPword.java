@@ -5,6 +5,7 @@
 package View;
 
 import Controller.Secure;
+import Model.User;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 /**
@@ -19,6 +20,7 @@ public class ForgetPword extends javax.swing.JPanel {
     
     public Frame frame;
     public Secure secure;    
+    public User user;
     
     public ForgetPword() {
         initComponents();
@@ -178,7 +180,7 @@ public class ForgetPword extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void passwordFldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFldKeyReleased
-//        checkString(passwordFld.getText());
+        checkString(passwordFld.getText());
     }//GEN-LAST:event_passwordFldKeyReleased
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -189,43 +191,37 @@ public class ForgetPword extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void resetpwordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetpwordBtnActionPerformed
-//        boolean resetFlag = false;
-//        
-//        if(usernameFld.getText().isEmpty() || passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty() || SecAnswerFld.getText().isEmpty()){
-//            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else if(usernameFld.getText().contains(" ")){
-//            JOptionPane.showMessageDialog(null, "Error: Username should not contain empty spaces.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
-//            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else if (!checkString(passwordFld.getText())){
-//            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else if(frame.main.sqlite.checkIfUsernameTaken(usernameFld.getText())){
-//            JOptionPane.showMessageDialog(null, "Error: username already taken", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else{
-//            //frame.registerAction(usernameFld.getText(), Secure.encrypt(passwordFld.getText()), confpassFld.getText(), SecQuestionFld.getSelectedItem().toString(), Secure.encrypt(SecAnswerFld.getText()));
-//            frame.main.sqlite.addLogs("REGISTER SUCCESS", usernameFld.getText(), "User Registration Successful", null);
-//            usernameFld.setText("");
-//            passwordFld.setText("");
-//            confpassFld.setText("");
-//            frame.loginNav();
-//            resetFlag = true;
-//        }
-//        
-//        if(!resetFlag){
-//            frame.main.sqlite.addLogs("REGISTER FAIL", usernameFld.getText(), "User Registration Failure", null);
-//        }
+        boolean resetFlag = false;
+        
+        if(passwordFld.getText().isEmpty() || confpassFld.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(!frame.secure.chkIfSame(passwordFld.getText(), confpassFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!checkString(passwordFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            frame.updatePassword(user.getUsername(), passwordFld.getText());
+            frame.main.sqlite.addLogs("PASSWORD UPDATE SUCCESS", user.getUsername(), "Reset password successful", null);
+            passwordFld.setText("");
+            confpassFld.setText("");
+            JOptionPane.showMessageDialog(null, "Password changed successfully!");
+            frame.loginNav();
+            resetFlag = true;
+        }
+        
+        if(!resetFlag){
+            frame.main.sqlite.addLogs("PASSWORD UPDATE FAIL", user.getUsername(), "Reset password Failure", null);
+        }
     }//GEN-LAST:event_resetpwordBtnActionPerformed
 
     private void passwordFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFldActionPerformed
 
-     private boolean checkString(String str) {
+    private boolean checkString(String str) {
     char ch;
     boolean upperCaseFlag = false;
     boolean lowerCaseFlag = false;
@@ -288,7 +284,10 @@ public class ForgetPword extends javax.swing.JPanel {
     else
         return false;
 }
-
+     
+     public void getUser(User user){
+        this.user = user;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField confpassFld;

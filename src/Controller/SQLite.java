@@ -205,6 +205,7 @@ public class SQLite {
     }
     
     
+    
     public ArrayList<History> getHistory(){
         String sql = "SELECT id, username, name, stock, timestamp FROM history";
         ArrayList<History> histories = new ArrayList<History>();
@@ -312,6 +313,22 @@ public class SQLite {
         }
     }
     
+    public void updatePassword(String username, String password){
+        String sql = "UPDATE users SET password=? WHERE username=?";
+            
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Secure.encrypt(password));
+            pstmt.setString(2, username);
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public boolean checkUser(String username, String password){
         String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer FROM users WHERE username=? AND password=?";
         User user = new User();
@@ -369,7 +386,33 @@ public class SQLite {
         return false;
     }
     
-    
+    public User getUser(String username){
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer FROM users WHERE username=?";
+        User user = new User();
+            
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                user = new User(rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getInt("role"),
+                        rs.getInt("locked"),
+                        rs.getString("SecQuestion"),
+                        rs.getString("SecAnswer"));
+            }
+            if(user.getId() != 0)
+                return user;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
     
     public Product getProduct(String name){
         String sql = "SELECT name, stock, price FROM product WHERE name='" + name + "';";

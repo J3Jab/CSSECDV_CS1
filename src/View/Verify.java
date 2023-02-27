@@ -8,7 +8,7 @@ package View;
  *
  * @author Admin
  */
-
+import Model.User;
 import Controller.Secure;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -21,7 +21,7 @@ public class Verify extends javax.swing.JPanel {
      */
     
     public Frame frame;
-    
+    public User user;
     
     public Verify() {
         initComponents();
@@ -38,7 +38,7 @@ public class Verify extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lbl_SecQuestion = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         SecAnswerFld = new javax.swing.JTextField();
         verifyBtn = new javax.swing.JButton();
@@ -53,8 +53,8 @@ public class Verify extends javax.swing.JPanel {
         jLabel3.setText("SECURITY QUESTION");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Question?");
+        lbl_SecQuestion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_SecQuestion.setText("Question?");
 
         jLabel5.setText("Your Answer");
 
@@ -91,7 +91,7 @@ public class Verify extends javax.swing.JPanel {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SecAnswerFld))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_SecQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))
                 .addGap(117, 117, 117))
@@ -114,7 +114,7 @@ public class Verify extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_SecQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,23 +130,39 @@ public class Verify extends javax.swing.JPanel {
     }//GEN-LAST:event_SecAnswerFldActionPerformed
 
     private void verifyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBtnActionPerformed
-        SecAnswerFld.setText("");
-        frame.forgetpwordNav();
+        
+        if(Secure.encrypt(SecAnswerFld.getText()).equalsIgnoreCase(user.getSecAnswer())){
+            frame.forgetpwordNav();
+            frame.forgetpwordPnl.getUser(user);
+            SecAnswerFld.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Error: Incorrect Security Answer", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+            frame.main.sqlite.addLogs("INCORRECT SECURITY ANSWER", user.getUsername(), "Wrong security answer given", null);
+        }
+            
+        
     }//GEN-LAST:event_verifyBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         SecAnswerFld.setText("");
         frame.loginNav();
     }//GEN-LAST:event_backBtnActionPerformed
-
+    
+    public void getUser(User user){
+        this.user = user;
+    }
+    
+    public void setSecQuestion(User user){
+        this.lbl_SecQuestion.setText(user.getSecQuestion());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField SecAnswerFld;
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lbl_SecQuestion;
     private javax.swing.JButton verifyBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ package View;
 import Controller.Secure;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import Model.User;
 
 /**
  *
@@ -110,8 +111,19 @@ public class EnterUsername extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void continueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueBtnActionPerformed
-        usernameFld.setText("");
-        frame.verifyNav();
+        User user = frame.main.sqlite.getUser(usernameFld.getText());
+        if(user != null){
+            
+            frame.verifyNav();
+            frame.verifyPnl.getUser(user);
+            frame.verifyPnl.setSecQuestion(user);
+            usernameFld.setText("");
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error: Username does not exist", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_continueBtnActionPerformed
 
 
