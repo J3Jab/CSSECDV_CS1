@@ -3,7 +3,9 @@ package View;
 
 import Controller.Secure;
 import javax.swing.JOptionPane;
-
+import Model.User;
+import Model.Logs;
+import java.util.ArrayList;
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
@@ -101,16 +103,30 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if(frame.main.sqlite.checkUser(usernameFld.getText(), passwordFld.getText())){
-            frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
-            usernameFld.setText("");
-            passwordFld.setText("");
-            frame.mainNav(); 
+            if(frame.main.sqlite.getUser(usernameFld.getText()).getLocked() == 1)
+                JOptionPane.showMessageDialog(null, "Account is locked out", "Error: Login", JOptionPane.ERROR_MESSAGE);
+            else{
+               frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
+                usernameFld.setText("");
+                passwordFld.setText("");
+                frame.mainNav();  
+            }
+            
         }
         
         else{
-            passwordFld.setText("");
             frame.main.sqlite.addLogs("LOGIN FAIL", usernameFld.getText(), "User Login Failure", null);
+            User user = frame.main.sqlite.getUser(usernameFld.getText());
+            ArrayList<Logs> logs = new ArrayList<Logs>();
+            if(user != null){
+                logs = frame.main.sqlite.getUserLogs(usernameFld.getText(), "LOGIN FAIL");
+                if(logs.size() >= 5){
+                    frame.main.sqlite.updateUser(usernameFld.getText(), user.getPassword(), user.getRole(), 1, 
+                            user.getSecQuestion(), user.getSecAnswer(), user.getFailLog());
+                }           
+            }
             JOptionPane.showMessageDialog(null, "Invalid Username and password combination", "Error: Login", JOptionPane.ERROR_MESSAGE);
+            passwordFld.setText("");
         }
         
         

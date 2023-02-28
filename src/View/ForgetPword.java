@@ -203,7 +203,7 @@ public class ForgetPword extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.updatePassword(user.getUsername(), passwordFld.getText());
+            frame.updateUser(user.getUsername(), passwordFld.getText(), user.getRole(), user.getLocked(), user.getSecQuestion(), user.getSecAnswer(), user.getFailLog());
             frame.main.sqlite.addLogs("PASSWORD UPDATE SUCCESS", user.getUsername(), "Reset password successful", null);
             passwordFld.setText("");
             confpassFld.setText("");

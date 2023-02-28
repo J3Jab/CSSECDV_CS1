@@ -8,6 +8,7 @@ public class User {
     private int locked = 0;
     private String SecQuestion;
     private String SecAnswer;
+    private int FailLog;
     
     public User(){
         this.id = 0;
@@ -18,7 +19,7 @@ public class User {
         this.password = password;
     }
     
-    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer){
+    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -26,6 +27,7 @@ public class User {
         this.locked = locked;
         this.SecQuestion = SecQuestion;
         this.SecAnswer = SecAnswer;
+        this.FailLog = FailLog;
     }
     
     public int getId() {
@@ -84,5 +86,12 @@ public class User {
         this.SecAnswer = SecAnswer;
     }
  
+    public int getFailLog() {
+        return FailLog;
+    }
+
+    public void setFailLog(int FailLog) {
+        this.FailLog = FailLog;
+    }
     
 }

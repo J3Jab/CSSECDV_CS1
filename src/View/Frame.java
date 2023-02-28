@@ -292,8 +292,8 @@ public class Frame extends javax.swing.JFrame {
         main.sqlite.addUser(username, password, SecQuestion, SecAnswer);
     }
     
-    public void updatePassword(String username, String password){
-        main.sqlite.updatePassword(username, password);
+    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
+        main.sqlite.updateUser(username, password, role, locked, SecQuestion, SecAnswer, FailLog);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
