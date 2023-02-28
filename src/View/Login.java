@@ -41,6 +41,7 @@ public class Login extends javax.swing.JPanel {
         passwordFld.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         passwordFld.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "PASSWORD", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
+        registerBtn.setBackground(new java.awt.Color(204, 255, 204));
         registerBtn.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         registerBtn.setText("REGISTER");
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -103,8 +104,10 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if(frame.main.sqlite.checkUser(usernameFld.getText(), passwordFld.getText())){
-            if(frame.main.sqlite.getUser(usernameFld.getText()).getLocked() == 1)
+            if(frame.main.sqlite.getUser(usernameFld.getText()).getLocked() == 1){
                 JOptionPane.showMessageDialog(null, "Account is locked out", "Error: Login", JOptionPane.ERROR_MESSAGE);
+                frame.main.sqlite.addLogs("ACCOUNT LOCKED LOGIN", usernameFld.getText(), "Locked account attempts to login.", null);
+            }
             else{
                frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
                 usernameFld.setText("");

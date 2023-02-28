@@ -114,11 +114,19 @@ public class EnterUsername extends javax.swing.JPanel {
         User user = frame.main.sqlite.getUser(usernameFld.getText());
         if(user != null){
             
-            frame.verifyNav();
-            frame.verifyPnl.getUser(user);
-            frame.verifyPnl.setSecQuestion(user);
-            usernameFld.setText("");
+            if(user.getLocked() != 1){
+               frame.verifyNav();
+                frame.verifyPnl.getUser(user);
+                frame.verifyPnl.setSecQuestion(user);
+                usernameFld.setText(""); 
+            }
             
+            else{
+                frame.main.sqlite.addLogs("ACCOUNT LOCKED RESET PASSWORD", user.getUsername(), "Locked account attempts to change password.", null);
+                JOptionPane.showMessageDialog(null, "Error: User Account is locked out.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+                usernameFld.setText("");
+                frame.loginNav();
+            }
         }
         else{
             JOptionPane.showMessageDialog(null, "Error: Username does not exist", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
