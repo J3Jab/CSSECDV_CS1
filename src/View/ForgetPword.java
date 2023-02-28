@@ -202,6 +202,9 @@ public class ForgetPword extends javax.swing.JPanel {
         else if (!checkString(passwordFld.getText())){
             JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
         }
+        else if(user.getPassword().equals(passwordFld.getText())){
+            JOptionPane.showMessageDialog(null, "Error: new password should not be the same as old password.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+        }
         else{
             frame.updateUser(user.getUsername(), passwordFld.getText(), user.getRole(), user.getLocked(), user.getSecQuestion(), user.getSecAnswer(), user.getFailLog());
             frame.main.sqlite.addLogs("PASSWORD UPDATE SUCCESS", user.getUsername(), "Reset password successful", null);

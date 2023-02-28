@@ -187,18 +187,21 @@ public class SQLite {
     }
     
     public void addUser(String username, String password, String SecQuestion, String SecAnswer) {
-        String sql = "INSERT INTO users(username,password, SecQuestion, SecAnswer) VALUES('" + username + "','" + password + "' ,'" + SecQuestion + "','" + SecAnswer + "')";
         
-        try (Connection conn = DriverManager.getConnection(driverURL);
-            Statement stmt = conn.createStatement()){
-            stmt.execute(sql);
+//        String sql = "INSERT INTO users(username,password, SecQuestion, SecAnswer) VALUES('" + username + "','" + password + "' ,'" + SecQuestion + "','" + SecAnswer + "')";
+//        
+//        System.out.println(sql);
+        String sql = "INSERT INTO users(username,password,SecQuestion,SecAnswer) VALUES(?,?,?,?)";
+       try (Connection conn = DriverManager.getConnection(driverURL);
+//            Statement stmt = conn.createStatement()){
+//            stmt.execute(sql);
             
-//      PREPARED STATEMENT EXAMPLE
-//      String sql = "INSERT INTO users(username,password) VALUES(?,?)";
-//      PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//      pstmt.setString(1, username);
-//      pstmt.setString(2, password);
-//      pstmt.executeUpdate();
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, username);
+      pstmt.setString(2, password);
+      pstmt.setString(3, SecQuestion);
+      pstmt.setString(4, SecAnswer);
+      pstmt.executeUpdate();
         } catch (Exception ex) {
             System.out.print(ex);
         }

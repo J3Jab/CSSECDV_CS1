@@ -223,6 +223,8 @@ public class Register extends javax.swing.JPanel {
             usernameFld.setText("");
             passwordFld.setText("");
             confpassFld.setText("");
+            SecAnswerFld.setText("");
+            SecQuestionFld.setSelectedIndex(0);
             JOptionPane.showMessageDialog(null, "Registration Successful!");
             frame.loginNav();
             registerFlag = true;
