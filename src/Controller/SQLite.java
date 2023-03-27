@@ -150,11 +150,18 @@ public class SQLite {
     }
     
     public void addHistory(String username, String name, int stock, String timestamp) {
-        String sql = "INSERT INTO history(username,name,stock,timestamp) VALUES('" + username + "','" + name + "','" + stock + "','" + timestamp + "')";
+        String sql = "INSERT INTO history(username,name,stock,timestamp) VALUES(?, ?, ?, ?)";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
-            Statement stmt = conn.createStatement()){
-            stmt.execute(sql);
+//            Statement stmt = conn.createStatement()){
+//            stmt.execute(sql);
+            
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, username);
+            stmt.setString(2, name);
+            stmt.setInt(3, stock);
+            stmt.setString(4, timestamp == null ? new Timestamp(new Date().getTime()).toString():timestamp);
+            stmt.executeUpdate();
         } catch (Exception ex) {
             System.out.print(ex);
         }
@@ -186,6 +193,21 @@ public class SQLite {
         }
     }
     
+    public void purchaseProduct(String name, int stock) {
+        String sql = "UPDATE product SET stock=? WHERE name=?";
+        
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, stock);
+            pstmt.setString(2, name);
+            pstmt.executeUpdate();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     // added edit product
 //    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
 //        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, FailLog=? WHERE username=?";
@@ -207,20 +229,45 @@ public class SQLite {
 //        }
 //    }
     
-    public void editProduct(String name, int stock, double price) {
+    public void editProduct(String name, int stock, float price, int id) {
 //        String sql = "INSERT INTO product(name,stock,price) VALUES('" + name + "','" + stock + "','" + price + "')";
-        String sql = "UPDATE products SET name=?, stock=?, price=?";
+        String sql = "UPDATE product SET name=?, stock=?, price=? WHERE id=?";
         
         try{
             Connection conn = DriverManager.getConnection(driverURL);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setInt(2, stock);
-            pstmt.setDouble(3, price);
+            pstmt.setFloat(3, price);
+            pstmt.setInt(4, id);
             pstmt.executeUpdate();
             
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+    
+//    public void removeUser(String username) {
+//        String sql = "DELETE FROM users WHERE username='" + username + "';";
+//
+//        try (Connection conn = DriverManager.getConnection(driverURL);
+//            Statement stmt = conn.createStatement()) {
+//            stmt.execute(sql);
+//            System.out.println("User " + username + " has been deleted.");
+//        } catch (Exception ex) {
+//            System.out.print(ex);
+//        }
+//    }
+    
+    public void deleteProduct(String name) {
+        String sql = "DELETE FROM product WHERE name='" + name + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Product " + name + " has been deleted.");
+        } catch (Exception ex) {
+            System.out.print(ex);
         }
     }
     

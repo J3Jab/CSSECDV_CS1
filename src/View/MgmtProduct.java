@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+//import.java.time.LocalDataTime;
+
 
 /**
  *
@@ -53,10 +55,32 @@ public class MgmtProduct extends javax.swing.JPanel {
 //      LOAD CONTENTS
         ArrayList<Product> products = sqlite.getProduct();
         for(int nCtr = 0; nCtr < products.size(); nCtr++){
-            tableModel.addRow(new Object[]{
+//            int x = 1;
+            
+            if (user.getRole() == 2) {                
+                 if (products.get(nCtr).getStock() != 0) {
+                     tableModel.addRow(new Object[]{
+                        products.get(nCtr).getName(), 
+                        products.get(nCtr).getStock(), 
+                        products.get(nCtr).getPrice()});
+                 }
+            }
+            
+            else {
+               tableModel.addRow(new Object[]{
                 products.get(nCtr).getName(), 
                 products.get(nCtr).getStock(), 
-                products.get(nCtr).getPrice()});
+                products.get(nCtr).getPrice()}); 
+            }
+
+
+
+
+//            tableModel.addRow(new Object[]{
+//                products.get(nCtr).getName(), 
+//                products.get(nCtr).getStock(), 
+//                products.get(nCtr).getPrice()}); 
+            
         }
         
         if (user.getRole() == 2) {
@@ -205,6 +229,32 @@ public class MgmtProduct extends javax.swing.JPanel {
 
             if (result == JOptionPane.OK_OPTION) {
                 System.out.println(stockFld.getText());
+                
+                int purchase = Integer.parseInt(stockFld.getText());
+                int current_stock = Integer.parseInt(tableModel.getValueAt(table.getSelectedRow(), 1).toString());
+                int new_stock = current_stock - purchase;
+                
+                if (purchase <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please input a number greater than 0", "Error: Invalid Input", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                else if (new_stock < 0) {
+                    JOptionPane.showMessageDialog(null, "Not Enough Stock", "Error: Invalid Input", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                else {
+                    ArrayList<Product> products = sqlite.getProduct();
+            
+                    for(int nCtr = 0; nCtr < products.size(); nCtr++){                        
+                        String a = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
+                        if (a.equals(products.get(nCtr).getName()) == true) {
+                            sqlite.purchaseProduct(a, new_stock);
+                            sqlite.addHistory(user.getUsername(), a, purchase, null);
+                            this.init();
+                            break;
+                        }
+                    }
+                }  
             }
         }
     }//GEN-LAST:event_purchaseBtnActionPerformed
@@ -235,9 +285,25 @@ public class MgmtProduct extends javax.swing.JPanel {
             String z = nameFld.getText();
             
 //            System.out.println(x);
+
+            ArrayList<Product> products = sqlite.getProduct();
+            int check = 0;
             
-            sqlite.addProduct(z, x, y);
-            this.init();
+            for(int nCtr = 0; nCtr < products.size(); nCtr++){
+                String a = nameFld.getText().toLowerCase();
+                
+                if (a.equals(products.get(nCtr).getName().toLowerCase()) == true) {
+                    check = 1;
+                    JOptionPane.showMessageDialog(null, "Please input a different product name", "Error: Product Name Already Exists", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
+//            JOptionPane.showMessageDialog(null, "NONO", "YESYES", JOptionPane.ERROR_MESSAGE);
+            
+            if (check == 0) {
+                sqlite.addProduct(z, x, y);
+                this.init();
+            }            
         }
         
         
@@ -279,29 +345,33 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-//                System.out.println(nameFld.getText());
-//                System.out.println(stockFld.getText());
-//                System.out.println(priceFld.getText());
-//                System.out.println(b);
+                System.out.println(nameFld.getText());
+                System.out.println(stockFld.getText());
+                System.out.println(priceFld.getText());
+                System.out.println(b);
                 
                 int x = Integer.parseInt(stockFld.getText());
                 float y = Float.parseFloat(priceFld.getText());
                 String z = nameFld.getText();
                 
-                for(int nCtr = 0; nCtr < products.size(); nCtr++){
-                    if (b == products.get(nCtr).getId()) {
-//                        products.get(nCtr).setName(z);
-//                        products.get(nCtr).setPrice(y);
-//                        products.get(nCtr).setStock(x);
-                        sqlite.editProduct(z, x, y);
-
-
-                        System.out.println(nameFld.getText());
-                        System.out.println(stockFld.getText());
-                        System.out.println(priceFld.getText());
+//                sqlite.editProduct(z, x, y);
+                sqlite.editProduct(z, x, y, b);
+                
+//                for(int nCtr = 0; nCtr < products.size(); nCtr++){
+//                    if (b == products.get(nCtr).getId()) {
+////                        products.get(nCtr).setName(z);
+////                        products.get(nCtr).setPrice(y);
+////                        products.get(nCtr).setStock(x);
+//                        sqlite.editProduct(z, x, y);
+//                        
+////                      add how to edit function
+//
+//                        System.out.println(nameFld.getText());
+//                        System.out.println(stockFld.getText());
+//                        System.out.println(priceFld.getText());
                         this.init();
-                    }
-                }
+//                    }
+//                }
                 
             }
         }
@@ -313,6 +383,12 @@ public class MgmtProduct extends javax.swing.JPanel {
             
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                
+                String z = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
+                
+                sqlite.deleteProduct(z);
+                
+                this.init();
             }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
