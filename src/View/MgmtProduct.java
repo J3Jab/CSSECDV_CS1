@@ -228,9 +228,18 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "PURCHASE PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-                if(sqlite.DEBUG_MODE == 0)
+                if(sqlite.DEBUG_MODE == 1)
                     System.out.println(stockFld.getText());
                 
+                try{
+                    int checkInt;
+                    checkInt = Integer.parseInt(stockFld.getText());
+                }
+                catch(Exception ex)
+                {
+                   JOptionPane.showMessageDialog(null, "Product not bought. Please input an acceptable number.", "Error: Expected integer input", JOptionPane.ERROR_MESSAGE);
+                   return; //exit function
+                }
                 int purchase = Integer.parseInt(stockFld.getText());
                 int current_stock = Integer.parseInt(tableModel.getValueAt(table.getSelectedRow(), 1).toString());
                 int new_stock = current_stock - purchase;
@@ -276,11 +285,33 @@ public class MgmtProduct extends javax.swing.JPanel {
         int result = JOptionPane.showConfirmDialog(null, message, "ADD PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
         if (result == JOptionPane.OK_OPTION) {
-            System.out.println(nameFld.getText());
-            System.out.println(stockFld.getText());
-            System.out.println(priceFld.getText());
+            if(sqlite.DEBUG_MODE == 1){
+                System.out.println(nameFld.getText());
+                System.out.println(stockFld.getText());
+                System.out.println(priceFld.getText());
+            }
             
+            try{
+                int checkInt;
+                
+                checkInt = Integer.parseInt(stockFld.getText());
+            }
+            catch(Exception ex)
+            {
+               JOptionPane.showMessageDialog(null, "Product not added. Please input an acceptable stock number.", "Error: Expected integer input", JOptionPane.ERROR_MESSAGE);
+               return; //exit function
+            }
             
+            try{
+                float checkFloat;
+                
+                checkFloat = Float.parseFloat(priceFld.getText());
+            }
+            catch(Exception ex)
+            {
+               JOptionPane.showMessageDialog(null, "Product not added. Please input an acceptable price.", "Error: Expected float input", JOptionPane.ERROR_MESSAGE);
+               return; //exit function
+            }
             int x = Integer.parseInt(stockFld.getText());
             float y = Float.parseFloat(priceFld.getText());
             String z = nameFld.getText();
@@ -318,8 +349,6 @@ public class MgmtProduct extends javax.swing.JPanel {
             int b = 0;
             
             // added 
-            System.out.println("hi");
-            System.out.println(table.getSelectedRow());
             ArrayList<Product> products = sqlite.getProduct();
             
             for(int nCtr = 0; nCtr < products.size(); nCtr++){
@@ -346,18 +375,41 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(nameFld.getText());
-                System.out.println(stockFld.getText());
-                System.out.println(priceFld.getText());
-                System.out.println(b);
-                
-                int x = Integer.parseInt(stockFld.getText());
-                float y = Float.parseFloat(priceFld.getText());
-                String z = nameFld.getText();
-                
+                if(sqlite.DEBUG_MODE == 1){
+                    System.out.println(nameFld.getText());
+                    System.out.println(stockFld.getText());
+                    System.out.println(priceFld.getText());
+                    System.out.println(b);
+                }
+            try{
+            int checkInt;
+
+            checkInt = Integer.parseInt(stockFld.getText());
+            }
+            catch(Exception ex)
+            {
+               JOptionPane.showMessageDialog(null, "Product not added. Please input an acceptable stock number.", "Error: Expected integer input", JOptionPane.ERROR_MESSAGE);
+               return; //exit function
+            }
+
+            try{
+                float checkFloat;
+
+                checkFloat = Float.parseFloat(priceFld.getText());
+            }
+            catch(Exception ex)
+            {
+               JOptionPane.showMessageDialog(null, "Product not added. Please input an acceptable price.", "Error: Expected float input", JOptionPane.ERROR_MESSAGE);
+               return; //exit function
+            }
+
+            int x = Integer.parseInt(stockFld.getText());
+            float y = Float.parseFloat(priceFld.getText());
+            String z = nameFld.getText();
+
 //                sqlite.editProduct(z, x, y);
-                sqlite.editProduct(z, x, y, b);
-                
+            sqlite.editProduct(z, x, y, b);
+
 //                for(int nCtr = 0; nCtr < products.size(); nCtr++){
 //                    if (b == products.get(nCtr).getId()) {
 ////                        products.get(nCtr).setName(z);
@@ -370,7 +422,7 @@ public class MgmtProduct extends javax.swing.JPanel {
 //                        System.out.println(nameFld.getText());
 //                        System.out.println(stockFld.getText());
 //                        System.out.println(priceFld.getText());
-                        this.init();
+                    this.init();
 //                    }
 //                }
                 
@@ -383,7 +435,8 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE PRODUCT", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
-                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                if(sqlite.DEBUG_MODE == 1)
+                    System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
                 
                 String z = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
                 

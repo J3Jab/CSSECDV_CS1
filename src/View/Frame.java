@@ -209,7 +209,7 @@ public class Frame extends javax.swing.JFrame {
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         this.user.setSessionID("0");
         this.user.setLogin_Time(null);
-        main.sqlite.updateUser(user);
+        main.sqlite.updateUserSessionID("0", null,user.getUsername());
         frameView.show(Container, "loginPnl");
     }//GEN-LAST:event_logoutBtnActionPerformed
 

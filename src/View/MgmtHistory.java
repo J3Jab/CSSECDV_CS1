@@ -56,14 +56,26 @@ public class MgmtHistory extends javax.swing.JPanel {
         ArrayList<History> history = sqlite.getHistory();
         for(int nCtr = 0; nCtr < history.size(); nCtr++){
             Product product = sqlite.getProduct(history.get(nCtr).getName());
-            tableModel.addRow(new Object[]{
+            if(user.getRole() == 2 && user.getUsername().equals(history.get(nCtr).getUsername())){
+                tableModel.addRow(new Object[]{
                 history.get(nCtr).getUsername(), 
                 history.get(nCtr).getName(), 
                 history.get(nCtr).getStock(), 
                 product.getPrice(), 
                 product.getPrice() * history.get(nCtr).getStock(), 
                 history.get(nCtr).getTimestamp()
-            });
+                });
+            }
+            else if (user.getRole() != 2){
+              tableModel.addRow(new Object[]{
+                history.get(nCtr).getUsername(), 
+                history.get(nCtr).getName(), 
+                history.get(nCtr).getStock(), 
+                product.getPrice(), 
+                product.getPrice() * history.get(nCtr).getStock(), 
+                history.get(nCtr).getTimestamp()
+                });  
+            }
         }
     }
     
@@ -188,16 +200,30 @@ public class MgmtHistory extends javax.swing.JPanel {
                    history.get(nCtr).getUsername().contains(searchFld.getText()) || 
                    searchFld.getText().contains(history.get(nCtr).getName()) || 
                    history.get(nCtr).getName().contains(searchFld.getText())){
-                
-                    Product product = sqlite.getProduct(history.get(nCtr).getName());
-                    tableModel.addRow(new Object[]{
-                        history.get(nCtr).getUsername(), 
-                        history.get(nCtr).getName(), 
-                        history.get(nCtr).getStock(), 
-                        product.getPrice(), 
-                        product.getPrice() * history.get(nCtr).getStock(), 
-                        history.get(nCtr).getTimestamp()
-                    });
+                    
+                    if(user.getRole() == 2 && user.getUsername().equals(history.get(nCtr).getUsername())){
+                        Product product = sqlite.getProduct(history.get(nCtr).getName());
+                        tableModel.addRow(new Object[]{
+                            history.get(nCtr).getUsername(), 
+                            history.get(nCtr).getName(), 
+                            history.get(nCtr).getStock(), 
+                            product.getPrice(), 
+                            product.getPrice() * history.get(nCtr).getStock(), 
+                            history.get(nCtr).getTimestamp()
+                        });
+                    }
+                    else if (user.getRole() != 2){
+                        Product product = sqlite.getProduct(history.get(nCtr).getName());
+                        tableModel.addRow(new Object[]{
+                            history.get(nCtr).getUsername(), 
+                            history.get(nCtr).getName(), 
+                            history.get(nCtr).getStock(), 
+                            product.getPrice(), 
+                            product.getPrice() * history.get(nCtr).getStock(), 
+                            history.get(nCtr).getTimestamp()
+                        });    
+                    }
+                    
                 }
             }
         }

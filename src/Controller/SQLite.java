@@ -491,6 +491,24 @@ public class SQLite {
         }
     }
     
+    public void updateUserSessionID(String SessionID, String login_time, String username){
+        
+        String sql = "UPDATE users SET SessionID=?, login_time=? WHERE username=?";
+            
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, SessionID);
+            pstmt.setString(2, login_time);
+            pstmt.setString(3, username);
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public boolean checkUser(String username, String password){
         String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users WHERE username=? AND password=?";
         User user = new User();

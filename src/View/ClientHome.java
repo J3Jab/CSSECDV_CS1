@@ -166,7 +166,7 @@ public class ClientHome extends javax.swing.JPanel {
         historyBtn.setForeground(Color.black);
         logsBtn.setForeground(Color.black);
         contentView.show(Content, "mgmtUser");
-        if(sqlite.DEBUG_MODE == 1)
+        if(mgmtUser.sqlite.DEBUG_MODE == 1)
             System.out.println(user.getRole());
     }//GEN-LAST:event_usersBtnActionPerformed
 

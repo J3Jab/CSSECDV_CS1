@@ -223,9 +223,6 @@ public class MgmtUser extends javax.swing.JPanel {
                 
                 
                 User temp_user = sqlite.getUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
-                // TODO: can you change your own role??
-                
-                // cannot change role of locked account
                 if(temp_user.getLocked() == 1)
                     JOptionPane.showMessageDialog(null, "Cannot change role of locked account", "Error: Locked Account", JOptionPane.ERROR_MESSAGE);
                 else{
@@ -278,12 +275,11 @@ public class MgmtUser extends javax.swing.JPanel {
                 else if(temp_user.getLocked() == 1)
                     temp_user.setLocked(0);
                 
-                //TODO: can you lock your own account??
                 sqlite.updateUser(temp_user);
             }
         }
     }//GEN-LAST:event_lockBtnActionPerformed
-    // TODO
+
     private void chgpassBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chgpassBtnActionPerformed
         if(table.getSelectedRow() >= 0){
             JTextField password = new JPasswordField();
@@ -330,7 +326,7 @@ public class MgmtUser extends javax.swing.JPanel {
                 }
 
                 if(!resetFlag){
-                    frame.main.sqlite.addLogs("PASSWORD UPDATE FAIL", temp_user.getUsername(), "Reset password Failure", null);
+                    sqlite.addLogs("PASSWORD UPDATE FAIL", temp_user.getUsername(), "Reset password Failure", null);
                 }
             }
         }
