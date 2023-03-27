@@ -9,6 +9,9 @@ public class User {
     private String SecQuestion;
     private String SecAnswer;
     private int FailLog;
+    private int session_id;
+//    private Product product[]; 
+    
     
     public User(){
         this.id = 0;
@@ -29,6 +32,22 @@ public class User {
         this.SecAnswer = SecAnswer;
         this.FailLog = FailLog;
     }
+    
+    public int getSessionId() {
+        return session_id;
+    }
+
+    public void setSessionId(int session_id) {
+        this.session_id = session_id;
+    }
+    
+//    public Product getProduct() {
+//        return product[];
+//    }
+
+//    public void setProduct(Product product[]) {
+//        this.product = product;
+//    }
     
     public int getId() {
         return id;

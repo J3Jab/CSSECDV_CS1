@@ -115,7 +115,7 @@ public class EnterUsername extends javax.swing.JPanel {
         if(user != null){
             
             if(user.getLocked() != 1){
-               frame.verifyNav();
+                frame.verifyNav();
                 frame.verifyPnl.getUser(user);
                 frame.verifyPnl.setSecQuestion(user);
                 usernameFld.setText(""); 

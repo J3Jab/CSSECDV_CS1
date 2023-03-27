@@ -8,6 +8,7 @@ package View;
 import Controller.SQLite;
 import Model.History;
 import Model.Product;
+import Model.User;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,6 +22,7 @@ public class MgmtHistory extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User user;
     
     public MgmtHistory(SQLite sqlite) {
         initComponents();
@@ -37,6 +39,11 @@ public class MgmtHistory extends javax.swing.JPanel {
 //        UNCOMMENT TO DISABLE BUTTONS
 //        searchBtn.setVisible(false);
 //        reportBtn.setVisible(false);
+    }
+    
+    // added functions
+    public void getUser(User user){
+        this.user = user;
     }
 
     public void init(){

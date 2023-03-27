@@ -25,11 +25,16 @@ public class ManagerHome extends javax.swing.JPanel {
     public MgmtLogs mgmtLogs;
     public MgmtProduct mgmtProduct;
     public MgmtUser mgmtUser;
+    public User user;
     
     private CardLayout contentView = new CardLayout();
     
     public ManagerHome() {
         initComponents();
+    }
+    
+    public void getUser(User user){
+        this.user = user;
     }
     
     public void init(SQLite sqlite){
@@ -49,7 +54,7 @@ public class ManagerHome extends javax.swing.JPanel {
 //        historyBtn.setVisible(false);
 //        usersBtn.setVisible(false);
 //        productsBtn.setVisible(false);
-//        logsBtn.setVisible(false);
+        logsBtn.setVisible(false);
     }
     
     public void showPnl(String panelName){
@@ -73,16 +78,14 @@ public class ManagerHome extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(153, 102, 255));
 
-        usersBtn.setBackground(new java.awt.Color(255, 255, 255));
         usersBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        usersBtn.setText("USERS");
+        usersBtn.setText("PROFILE");
         usersBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usersBtnActionPerformed(evt);
             }
         });
 
-        productsBtn.setBackground(new java.awt.Color(255, 255, 255));
         productsBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         productsBtn.setText("PRODUCTS");
         productsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +107,6 @@ public class ManagerHome extends javax.swing.JPanel {
             .addGap(0, 271, Short.MAX_VALUE)
         );
 
-        historyBtn.setBackground(new java.awt.Color(255, 255, 255));
         historyBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         historyBtn.setText("HISTORY");
         historyBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +115,6 @@ public class ManagerHome extends javax.swing.JPanel {
             }
         });
 
-        logsBtn.setBackground(new java.awt.Color(255, 255, 255));
         logsBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         logsBtn.setText("LOGS");
         logsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +132,7 @@ public class ManagerHome extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(usersBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(productsBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -156,6 +157,7 @@ public class ManagerHome extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersBtnActionPerformed
+        mgmtUser.getUser(user);
         mgmtUser.init();
         usersBtn.setForeground(Color.red);
         productsBtn.setForeground(Color.black);
@@ -165,6 +167,7 @@ public class ManagerHome extends javax.swing.JPanel {
     }//GEN-LAST:event_usersBtnActionPerformed
 
     private void productsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsBtnActionPerformed
+        mgmtProduct.getUser(user);
         mgmtProduct.init();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.red);
@@ -174,6 +177,7 @@ public class ManagerHome extends javax.swing.JPanel {
     }//GEN-LAST:event_productsBtnActionPerformed
 
     private void historyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtnActionPerformed
+        mgmtHistory.getUser(user);
         mgmtHistory.init();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.black);
@@ -183,6 +187,7 @@ public class ManagerHome extends javax.swing.JPanel {
     }//GEN-LAST:event_historyBtnActionPerformed
 
     private void logsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logsBtnActionPerformed
+        mgmtLogs.getUser(user);
         mgmtLogs.init();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.black);

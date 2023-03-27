@@ -6,9 +6,12 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.WindowConstants;
+import Model.User;
 
 public class Frame extends javax.swing.JFrame {
 
+    public User user;
+    
     public Frame() {
         initComponents();
     }
@@ -265,6 +268,46 @@ public class Frame extends javax.swing.JFrame {
     
     public void mainNav(){
         frameView.show(Container, "homePnl");
+        
+        if(user.getRole() == 2){
+            managerBtn.setVisible(false);
+            staffBtn.setVisible(false);
+            adminBtn.setVisible(false);
+            
+            clientHomePnl.showPnl("home");
+            contentView.show(Content, "clientHomePnl");
+            clientHomePnl.getUser(user);
+        }
+        
+        if(user.getRole() == 3){
+            managerBtn.setVisible(false);
+            clientBtn.setVisible(false);
+            adminBtn.setVisible(false);
+            
+            staffHomePnl.showPnl("home");
+            contentView.show(Content, "staffHomePnl");
+            staffHomePnl.getUser(user);
+        }
+        
+        if(user.getRole() == 4){
+            staffBtn.setVisible(false);
+            clientBtn.setVisible(false);
+            adminBtn.setVisible(false);
+            
+            managerHomePnl.showPnl("home");
+            contentView.show(Content, "managerHomePnl");
+            managerHomePnl.getUser(user);
+        }
+        
+        if(user.getRole() == 5){
+            managerBtn.setVisible(false);
+            staffBtn.setVisible(false);
+            clientBtn.setVisible(false);
+            
+            adminHomePnl.showPnl("home");
+            contentView.show(Content, "adminHomePnl");
+            adminHomePnl.getUser(user);
+        } 
     }
     
     public void loginNav(){
@@ -295,6 +338,15 @@ public class Frame extends javax.swing.JFrame {
     public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
         main.sqlite.updateUser(username, password, role, locked, SecQuestion, SecAnswer, FailLog);
     }
+    
+    // added functions
+    public void getUser(User user){
+        this.user = user;
+    }
+    
+//    public void addProductAction(String name, int stock, float prices){
+//        main.sqlite.addProduct(pname, stock, price);
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Container;

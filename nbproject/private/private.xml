@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/View/Register.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/Controller/Main.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/View/Login.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/Model/User.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/View/Frame.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/Controller/Secure.java</file>
-            <file>file:/C:/Users/j3jab/OneDrive/Documents/DLSU/4th%20Year/1st%20term/CSSECDV/CSSECDV%20MP/src/Controller/SQLite.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Login.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Verify.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Register.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/EnterUsername.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Frame.java</file>
+            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/ForgetPword.java</file>
         </group>
     </open-files>
 </project-private>

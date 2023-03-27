@@ -109,9 +109,12 @@ public class Login extends javax.swing.JPanel {
                 frame.main.sqlite.addLogs("ACCOUNT LOCKED LOGIN", usernameFld.getText(), "Locked account attempts to login.", null);
             }
             else{
-               frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
+                frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
+                User user = frame.main.sqlite.getUser(usernameFld.getText());
                 usernameFld.setText("");
                 passwordFld.setText("");
+                System.out.println(user.getRole());
+                frame.getUser(user);
                 frame.mainNav();  
             }
             

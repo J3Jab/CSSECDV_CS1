@@ -7,6 +7,7 @@ package View;
 
 import Controller.SQLite;
 import Model.Logs;
+import Model.User;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +19,7 @@ public class MgmtLogs extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User user;
     
     public MgmtLogs(SQLite sqlite) {
         initComponents();
@@ -28,6 +30,11 @@ public class MgmtLogs extends javax.swing.JPanel {
 //        UNCOMMENT TO DISABLE BUTTONS
 //        clearBtn.setVisible(false);
 //        debugBtn.setVisible(false);
+    }
+    
+    // added functions
+    public void getUser(User user){
+        this.user = user;
     }
 
     public void init(){

@@ -5,8 +5,10 @@
  */
 package View;
 
+import Controller.Main;
 import Controller.SQLite;
 import Model.Product;
+import Model.User;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +23,8 @@ public class MgmtProduct extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User user;
+//    public Main main;
     
     public MgmtProduct(SQLite sqlite) {
         initComponents();
@@ -33,6 +37,11 @@ public class MgmtProduct extends javax.swing.JPanel {
 //        addBtn.setVisible(false);
 //        editBtn.setVisible(false);
 //        deleteBtn.setVisible(false);
+    }
+    
+    // added functions
+    public void getUser(User user){
+        this.user = user;
     }
 
     public void init(){
@@ -48,6 +57,20 @@ public class MgmtProduct extends javax.swing.JPanel {
                 products.get(nCtr).getName(), 
                 products.get(nCtr).getStock(), 
                 products.get(nCtr).getPrice()});
+        }
+        
+        if (user.getRole() == 2) {
+            addBtn.setVisible(false);
+            editBtn.setVisible(false);
+            deleteBtn.setVisible(false);
+        }
+        
+        if (user.getRole() == 3) {
+            purchaseBtn.setVisible(false);
+        }
+        
+        if (user.getRole() == 4) {
+            purchaseBtn.setVisible(false);
         }
     }
     
@@ -104,7 +127,6 @@ public class MgmtProduct extends javax.swing.JPanel {
             table.getColumnModel().getColumn(2).setMaxWidth(100);
         }
 
-        purchaseBtn.setBackground(new java.awt.Color(255, 255, 255));
         purchaseBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         purchaseBtn.setText("PURCHASE");
         purchaseBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +135,6 @@ public class MgmtProduct extends javax.swing.JPanel {
             }
         });
 
-        addBtn.setBackground(new java.awt.Color(255, 255, 255));
         addBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         addBtn.setText("ADD");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +143,6 @@ public class MgmtProduct extends javax.swing.JPanel {
             }
         });
 
-        editBtn.setBackground(new java.awt.Color(255, 255, 255));
         editBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         editBtn.setText("EDIT");
         editBtn.setToolTipText("");
@@ -132,7 +152,6 @@ public class MgmtProduct extends javax.swing.JPanel {
             }
         });
 
-        deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         deleteBtn.setText("DELETE");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +228,19 @@ public class MgmtProduct extends javax.swing.JPanel {
             System.out.println(nameFld.getText());
             System.out.println(stockFld.getText());
             System.out.println(priceFld.getText());
+            
+            
+            int x = Integer.parseInt(stockFld.getText());
+            float y = Float.parseFloat(priceFld.getText());
+            String z = nameFld.getText();
+            
+//            System.out.println(x);
+            
+            sqlite.addProduct(z, x, y);
+            this.init();
         }
+        
+        
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
@@ -217,6 +248,25 @@ public class MgmtProduct extends javax.swing.JPanel {
             JTextField nameFld = new JTextField(tableModel.getValueAt(table.getSelectedRow(), 0) + "");
             JTextField stockFld = new JTextField(tableModel.getValueAt(table.getSelectedRow(), 1) + "");
             JTextField priceFld = new JTextField(tableModel.getValueAt(table.getSelectedRow(), 2) + "");
+            int b = 0;
+            
+            // added 
+            System.out.println("hi");
+            System.out.println(table.getSelectedRow());
+            ArrayList<Product> products = sqlite.getProduct();
+            
+            for(int nCtr = 0; nCtr < products.size(); nCtr++){
+                String a = nameFld.getText();
+                
+//                tableModel.addRow(new Object[]{
+//                    products.get(nCtr).getName(), 
+//                    products.get(nCtr).getStock(), 
+//                    products.get(nCtr).getPrice()});
+                if (a.equals(products.get(nCtr).getName()) == true) {
+                    b = products.get(nCtr).getId();
+                }
+            }
+            
 
             designer(nameFld, "PRODUCT NAME");
             designer(stockFld, "PRODUCT STOCK");
@@ -229,9 +279,30 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(nameFld.getText());
-                System.out.println(stockFld.getText());
-                System.out.println(priceFld.getText());
+//                System.out.println(nameFld.getText());
+//                System.out.println(stockFld.getText());
+//                System.out.println(priceFld.getText());
+//                System.out.println(b);
+                
+                int x = Integer.parseInt(stockFld.getText());
+                float y = Float.parseFloat(priceFld.getText());
+                String z = nameFld.getText();
+                
+                for(int nCtr = 0; nCtr < products.size(); nCtr++){
+                    if (b == products.get(nCtr).getId()) {
+//                        products.get(nCtr).setName(z);
+//                        products.get(nCtr).setPrice(y);
+//                        products.get(nCtr).setStock(x);
+                        sqlite.editProduct(z, x, y);
+
+
+                        System.out.println(nameFld.getText());
+                        System.out.println(stockFld.getText());
+                        System.out.println(priceFld.getText());
+                        this.init();
+                    }
+                }
+                
             }
         }
     }//GEN-LAST:event_editBtnActionPerformed

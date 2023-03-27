@@ -186,6 +186,44 @@ public class SQLite {
         }
     }
     
+    // added edit product
+//    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
+//        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, FailLog=? WHERE username=?";
+//            
+//        try{
+//            Connection conn = DriverManager.getConnection(driverURL);
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, password);
+//            pstmt.setInt(2, role);
+//            pstmt.setInt(3, locked);
+//            pstmt.setString(4, SecQuestion);
+//            pstmt.setString(5, SecAnswer);
+//            pstmt.setInt(6, FailLog);
+//            pstmt.setString(7, username);
+//            pstmt.executeUpdate();
+//            
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+    
+    public void editProduct(String name, int stock, double price) {
+//        String sql = "INSERT INTO product(name,stock,price) VALUES('" + name + "','" + stock + "','" + price + "')";
+        String sql = "UPDATE products SET name=?, stock=?, price=?";
+        
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setInt(2, stock);
+            pstmt.setDouble(3, price);
+            pstmt.executeUpdate();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public void addUser(String username, String password, String SecQuestion, String SecAnswer) {
         
 //        String sql = "INSERT INTO users(username,password, SecQuestion, SecAnswer) VALUES('" + username + "','" + password + "' ,'" + SecQuestion + "','" + SecAnswer + "')";

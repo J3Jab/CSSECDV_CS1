@@ -25,6 +25,10 @@ public class MgmtUser extends javax.swing.JPanel {
     public SQLite sqlite;
     public DefaultTableModel tableModel;
     
+    // added
+    public User user;
+//    public Frame frame;
+    
     public MgmtUser(SQLite sqlite) {
         initComponents();
         this.sqlite = sqlite;
@@ -36,6 +40,9 @@ public class MgmtUser extends javax.swing.JPanel {
 //        deleteBtn.setVisible(false);
 //        lockBtn.setVisible(false);
 //        chgpassBtn.setVisible(false);
+            
+//          table.setVisible(false);
+
     }
     
     public void init(){
@@ -52,6 +59,29 @@ public class MgmtUser extends javax.swing.JPanel {
                 users.get(nCtr).getPassword(), 
                 users.get(nCtr).getRole(), 
                 users.get(nCtr).getLocked()});
+        }
+        
+        if (user.getRole() != 5) {
+            deleteBtn.setVisible(false);
+            editRoleBtn.setVisible(false);
+            lockBtn.setVisible(false);
+//            jScrollPane1.setVisible(false);
+
+            for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
+                tableModel.removeRow(0);
+            }
+            
+            for(int nCtr = 0; nCtr < users.size(); nCtr++){
+                if (user.getUsername().equals(users.get(nCtr).getUsername()) == true){
+                    tableModel.addRow(new Object[]{
+                    users.get(nCtr).getUsername(), 
+                    "********", 
+                    users.get(nCtr).getRole(), 
+                    users.get(nCtr).getLocked()});
+//                    System.out.println("hi");
+                }  
+            }
+
         }
     }
 
@@ -109,7 +139,6 @@ public class MgmtUser extends javax.swing.JPanel {
             table.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
-        editRoleBtn.setBackground(new java.awt.Color(255, 255, 255));
         editRoleBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         editRoleBtn.setText("EDIT ROLE");
         editRoleBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +147,6 @@ public class MgmtUser extends javax.swing.JPanel {
             }
         });
 
-        deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
         deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         deleteBtn.setText("DELETE");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +155,6 @@ public class MgmtUser extends javax.swing.JPanel {
             }
         });
 
-        lockBtn.setBackground(new java.awt.Color(255, 255, 255));
         lockBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lockBtn.setText("LOCK/UNLOCK");
         lockBtn.setToolTipText("");
@@ -137,7 +164,6 @@ public class MgmtUser extends javax.swing.JPanel {
             }
         });
 
-        chgpassBtn.setBackground(new java.awt.Color(255, 255, 255));
         chgpassBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         chgpassBtn.setText("CHANGE PASS");
         chgpassBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -240,6 +266,10 @@ public class MgmtUser extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_chgpassBtnActionPerformed
 
+    // added functions
+    public void getUser(User user){
+        this.user = user;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chgpassBtn;
