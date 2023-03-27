@@ -9,6 +9,7 @@ public class User {
     private String SecQuestion;
     private String SecAnswer;
     private String SessionID;
+    private String login_time;
     
 //    private Product product[]; 
     
@@ -22,7 +23,7 @@ public class User {
         this.password = password;
     }
     
-    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID){
+    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID, String login_time){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -31,6 +32,7 @@ public class User {
         this.SecQuestion = SecQuestion;
         this.SecAnswer = SecAnswer;
         this.SessionID = SessionID;
+        this.login_time = login_time;
     }
 //    public Product getProduct() {
 //        return product[];
@@ -102,6 +104,14 @@ public class User {
 
     public void setSessionID(String SessionID) {
         this.SessionID = SessionID;
+    }
+    
+    public String getLogin_Time(){
+        return login_time;
+    }
+    
+    public void setLogin_Time(String login_time){
+        this.login_time = login_time;
     }
     
 }

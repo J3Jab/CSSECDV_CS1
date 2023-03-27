@@ -100,7 +100,7 @@ public class ForgetPword extends javax.swing.JPanel {
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lbl_length.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_length.setText("At least 12 characters");
+        lbl_length.setText("At least 12 characters and at most 32 characters");
 
         lbl_number.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_number.setText("At least one numeric character [0-9]");
@@ -126,12 +126,12 @@ public class ForgetPword extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_length, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                            .addComponent(lbl_specialChar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_whiteSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -206,7 +206,8 @@ public class ForgetPword extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: new password should not be the same as old password.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.updateUser(user.getUsername(), secure.encrypt(passwordFld.getText()), user.getRole(), user.getLocked(), user.getSecQuestion(), user.getSecAnswer(), user.getSessionID());
+            user.setPassword(secure.encrypt(passwordFld.getText()));
+            frame.updateUser(user);
             frame.main.sqlite.addLogs("PASSWORD UPDATE SUCCESS", user.getUsername(), "Reset password successful", null);
             passwordFld.setText("");
             confpassFld.setText("");
@@ -235,7 +236,7 @@ public class ForgetPword extends javax.swing.JPanel {
     
     String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
     
-    if(str.length() >= 12){
+    if(str.length() >= 12 && str.length() <= 32){
         lengthFlag = true;
         lbl_length.setForeground(Color.green.darker());
     }

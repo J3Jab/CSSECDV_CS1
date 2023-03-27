@@ -6,6 +6,10 @@ import javax.swing.JOptionPane;
 import Model.User;
 import Model.Logs;
 import java.util.ArrayList;
+
+import java.security.SecureRandom;
+import java.sql.Timestamp;
+import java.util.Date;
 public class Login extends javax.swing.JPanel {
 
     public Frame frame;
@@ -103,23 +107,39 @@ public class Login extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        // check if user exists
         if(frame.main.sqlite.checkUser(usernameFld.getText(), passwordFld.getText())){
+            
+            // check if account is locked
             if(frame.main.sqlite.getUser(usernameFld.getText()).getLocked() == 1){
                 JOptionPane.showMessageDialog(null, "Account is locked out", "Error: Login", JOptionPane.ERROR_MESSAGE);
                 frame.main.sqlite.addLogs("ACCOUNT LOCKED LOGIN", usernameFld.getText(), "Locked account attempts to login.", null);
             }
             else{
                 frame.main.sqlite.addLogs("LOGIN SUCCESS", usernameFld.getText(), "User Login Successful", null);
+                
+                // set Session ID
                 User user = frame.main.sqlite.getUser(usernameFld.getText());
+                
+                char[] alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
+                SecureRandom random = new SecureRandom();
+                StringBuilder stb = new StringBuilder();
+                
+                for(int i = 0; i < 32; i++){
+                    stb.append(alphanumeric[random.nextInt(alphanumeric.length)]);
+                }
+                user.setSessionID(stb.toString());
+                user.setLogin_Time(new Timestamp(new Date().getTime()).toString());
+                frame.main.sqlite.updateUser(user);
                 usernameFld.setText("");
                 passwordFld.setText("");
-                System.out.println(user.getRole());
                 frame.getUser(user);
                 frame.mainNav();  
             }
             
         }
         
+        // user does not exist
         else{
             frame.main.sqlite.addLogs("LOGIN FAIL", usernameFld.getText(), "User Login Failure", null);
             User user = frame.main.sqlite.getUser(usernameFld.getText());
@@ -130,7 +150,6 @@ public class Login extends javax.swing.JPanel {
                 boolean hasLogin = false;
                 for(int i = logs.size() - 1; i >= 0; i--){
                     
-                    System.out.println(logs.get(i).getEvent());
                     if(logs.get(i).getEvent().equals("LOGIN FAIL")){
                         failCtr++;
                     }
@@ -140,15 +159,14 @@ public class Login extends javax.swing.JPanel {
                         failCtr = 0;
                         break;
                     }
-                        
                     if(failCtr >= 5){
                         break;
                     }
                 }
-                
+                // if user has 5 failed login attempts in a row
                 if(!hasLogin && failCtr >= 5){
-                    frame.main.sqlite.updateUser(usernameFld.getText(), user.getPassword(), user.getRole(), 1, 
-                            user.getSecQuestion(), user.getSecAnswer(), user.getSessionID());
+                    user.setLocked(1);
+                    frame.main.sqlite.updateUser(user);
                 }           
             }
             JOptionPane.showMessageDialog(null, "Invalid Username and password combination", "Error: Login", JOptionPane.ERROR_MESSAGE);

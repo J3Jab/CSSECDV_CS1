@@ -7,6 +7,9 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.WindowConstants;
 import Model.User;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Frame extends javax.swing.JFrame {
 
@@ -204,6 +207,9 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_clientBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        this.user.setSessionID("0");
+        this.user.setLogin_Time(null);
+        main.sqlite.updateUser(user);
         frameView.show(Container, "loginPnl");
     }//GEN-LAST:event_logoutBtnActionPerformed
 
@@ -255,13 +261,44 @@ public class Frame extends javax.swing.JFrame {
         Container.add(forgetpwordPnl, "forgetpwordPnl");
         
         
-        frameView.show(Container, "loginPnl");
-        
         Content.setLayout(contentView);
         Content.add(adminHomePnl, "adminHomePnl");
         Content.add(managerHomePnl, "managerHomePnl");
         Content.add(staffHomePnl, "staffHomePnl");
         Content.add(clientHomePnl, "clientHomePnl");
+        //here for session
+        
+        User user_session = main.sqlite.getUserWithSessionID();
+        
+        try{
+            if(user_session != null){
+                //convert string to timestamp
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                Date parsedDate = dateFormat.parse(user_session.getLogin_Time());
+//                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                long time = parsedDate.getTime() + 86400000;
+                long curr_time = new Date().getTime();
+                // if login time + 24hrs is more than current time
+                if(time < curr_time){
+                    user_session.setSessionID("0");
+                    user_session.setLogin_Time(null);
+                    main.sqlite.updateUser(user_session);
+                    frameView.show(Container, "loginPnl");
+                }
+                else{
+                    this.user = user_session;
+                    mainNav();
+                }
+            }
+            else{
+                frameView.show(Container, "loginPnl");
+            }
+        }catch(Exception e){
+
+        }
+        
         
         this.setVisible(true);
     }
@@ -335,8 +372,8 @@ public class Frame extends javax.swing.JFrame {
         main.sqlite.addUser(username, password, SecQuestion, SecAnswer);
     }
     
-    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID){
-        main.sqlite.updateUser(username, password, role, locked, SecQuestion, SecAnswer, SessionID);
+    public void updateUser(User user){
+        main.sqlite.updateUser(user);
     }
     
     // added functions

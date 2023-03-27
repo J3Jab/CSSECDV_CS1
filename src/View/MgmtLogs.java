@@ -8,7 +8,9 @@ package View;
 import Controller.SQLite;
 import Model.Logs;
 import Model.User;
+import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -142,14 +144,26 @@ public class MgmtLogs extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all logs?", "DELETE LOGS", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
         
+        if (result == JOptionPane.YES_OPTION) {
+            sqlite.deleteLogs();
+        }
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void debugBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugBtnActionPerformed
-        if(sqlite.DEBUG_MODE == 1)
+        // 0 for disable, 1 for enable
+        if(sqlite.DEBUG_MODE == 1){
             sqlite.DEBUG_MODE = 0;
-        else
+            debugBtn.setBackground(Color.red.darker());
+        }
+            
+            
+        else{
             sqlite.DEBUG_MODE = 1;
+            debugBtn.setBackground(Color.green.darker());
+        }
+            
     }//GEN-LAST:event_debugBtnActionPerformed
 
 

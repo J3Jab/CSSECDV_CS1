@@ -36,14 +36,14 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="SecQuestionFld" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" alignment="1" pref="506" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
                           <Component id="passwordFld" alignment="1" max="32767" attributes="0"/>
                           <Component id="usernameFld" alignment="1" max="32767" attributes="0"/>
                           <Component id="confpassFld" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_length" max="32767" attributes="0"/>
-                                  <Component id="lbl_uppercase" pref="231" max="32767" attributes="0"/>
+                                  <Component id="lbl_uppercase" max="32767" attributes="0"/>
                                   <Component id="lbl_lowercase" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -231,7 +231,7 @@
     <Component class="javax.swing.JLabel" name="lbl_length">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="At least 12 characters"/>
+        <Property name="text" type="java.lang.String" value="At least 12 characters and at most 32 characters"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_uppercase">

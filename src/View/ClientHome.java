@@ -20,7 +20,9 @@ import javax.swing.table.DefaultTableModel;
  * @author BeepXD
  */
 public class ClientHome extends javax.swing.JPanel {
-
+    
+    public SQLite sqlite;
+    
     public MgmtHistory mgmtHistory;
     public MgmtLogs mgmtLogs;
     public MgmtProduct mgmtProduct;
@@ -164,7 +166,8 @@ public class ClientHome extends javax.swing.JPanel {
         historyBtn.setForeground(Color.black);
         logsBtn.setForeground(Color.black);
         contentView.show(Content, "mgmtUser");
-        System.out.println(user.getRole());
+        if(sqlite.DEBUG_MODE == 1)
+            System.out.println(user.getRole());
     }//GEN-LAST:event_usersBtnActionPerformed
 
     private void productsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsBtnActionPerformed

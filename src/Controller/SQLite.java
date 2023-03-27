@@ -23,10 +23,12 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL)) {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("Database database.db created.");
+                if(DEBUG_MODE == 1)
+                    System.out.println("Database database.db created.");
             }
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -42,9 +44,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table history in database.db created.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table history in database.db created.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -60,9 +64,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table logs in database.db created.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table logs in database.db created.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
      
@@ -77,9 +83,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table product in database.db created.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table product in database.db created.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
      
@@ -95,9 +103,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table users in database.db created.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table users in database.db created.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -107,9 +117,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table history in database.db dropped.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table history in database.db dropped.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -119,9 +131,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table logs in database.db dropped.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table logs in database.db dropped.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -131,9 +145,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table product in database.db dropped.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table product in database.db dropped.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -143,9 +159,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Table users in database.db dropped.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Table users in database.db dropped.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -163,7 +181,8 @@ public class SQLite {
             stmt.setString(4, timestamp == null ? new Timestamp(new Date().getTime()).toString():timestamp);
             stmt.executeUpdate();
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -178,7 +197,20 @@ public class SQLite {
             stmt.setString(4, timestamp == null ? new Timestamp(new Date().getTime()).toString():timestamp);
             stmt.executeUpdate();
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
+        }
+    }
+    
+    public void deleteLogs() {
+        String sql = "DELETE FROM logs";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (Exception ex) {
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -189,7 +221,8 @@ public class SQLite {
             Statement stmt = conn.createStatement()){
             stmt.execute(sql);
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -265,9 +298,11 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Product " + name + " has been deleted.");
+            if(DEBUG_MODE == 1)
+                System.out.println("Product " + name + " has been deleted.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -288,7 +323,8 @@ public class SQLite {
       pstmt.setString(4, SecAnswer);
       pstmt.executeUpdate();
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -310,7 +346,8 @@ public class SQLite {
                                    rs.getString("timestamp")));
             }
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
         return histories;
     }
@@ -375,13 +412,14 @@ public class SQLite {
                                    rs.getFloat("price")));
             }
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
         return products;
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -396,7 +434,8 @@ public class SQLite {
                                    rs.getInt("locked"),
                                    rs.getString("SecQuestion"),
                                    rs.getString("SecAnswer"),
-                                    rs.getString("SessionID")));
+                                    rs.getString("SessionID"),
+                                    rs.getString("login_time")));
             }
         } catch (Exception ex) {}
         return users;
@@ -410,7 +449,8 @@ public class SQLite {
             stmt.execute(sql);
             
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
@@ -420,25 +460,30 @@ public class SQLite {
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("User " + username + " has been deleted.");
+            if(DEBUG_MODE == 1)
+                System.out.println("User " + username + " has been deleted.");
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
     }
     
-    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID){
-        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, SessionID=? WHERE username=?";
+    public void updateUser(User user){
+        
+        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, SessionID=?, login_time=? WHERE username=?";
             
         try{
             Connection conn = DriverManager.getConnection(driverURL);
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, password);
-            pstmt.setInt(2, role);
-            pstmt.setInt(3, locked);
-            pstmt.setString(4, SecQuestion);
-            pstmt.setString(5, SecAnswer);
-            pstmt.setString(6, SessionID);
-            pstmt.setString(7, username);
+            pstmt.setString(1, user.getPassword());
+            pstmt.setInt(2, user.getRole());
+            pstmt.setInt(3, user.getLocked());
+            pstmt.setString(4, user.getSecQuestion());
+            pstmt.setString(5, user.getSecAnswer());
+            pstmt.setString(6, user.getSessionID());
+            pstmt.setString(7, user.getLogin_Time());
+            pstmt.setString(8, user.getUsername());
+            
             pstmt.executeUpdate();
             
         } catch (Exception ex) {
@@ -447,7 +492,7 @@ public class SQLite {
     }
     
     public boolean checkUser(String username, String password){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=? AND password=?";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users WHERE username=? AND password=?";
         User user = new User();
             
         try{
@@ -465,7 +510,8 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getString("SessionID"));
+                        rs.getString("SessionID"),
+                        rs.getString("login_time"));
             }
             if(user.getId() != 0)
                 return true;
@@ -477,7 +523,7 @@ public class SQLite {
     }
     
     public boolean checkIfUsernameTaken(String username){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=? COLLATE NOCASE";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users WHERE username=? COLLATE NOCASE";
         User user = new User();
             
         try{
@@ -494,7 +540,8 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getString("SessionID"));
+                        rs.getString("SessionID"),
+                        rs.getString("login_time"));
             }
             if(user.getId() != 0)
                 return true;
@@ -506,7 +553,7 @@ public class SQLite {
     }
     
     public User getUser(String username){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=?";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users WHERE username=?";
         User user = new User();
             
         try{
@@ -523,7 +570,37 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getString("SessionID"));
+                        rs.getString("SessionID"),
+                        rs.getString("login_time"));
+            }
+            if(user.getId() != 0)
+                return user;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    public User getUserWithSessionID(){
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID, login_time FROM users WHERE NOT SessionID=?";
+        User user = new User();
+            
+        try{
+            Connection conn = DriverManager.getConnection(driverURL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "0");
+            
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                user = new User(rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getInt("role"),
+                        rs.getInt("locked"),
+                        rs.getString("SecQuestion"),
+                        rs.getString("SecAnswer"),
+                        rs.getString("SessionID"),
+                        rs.getString("login_time"));
             }
             if(user.getId() != 0)
                 return user;
@@ -544,7 +621,8 @@ public class SQLite {
                                    rs.getInt("stock"),
                                    rs.getFloat("price"));
         } catch (Exception ex) {
-            System.out.print(ex);
+            if(DEBUG_MODE == 1)
+                System.out.print(ex);
         }
         return product;
     }

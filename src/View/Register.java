@@ -82,7 +82,7 @@ public class Register extends javax.swing.JPanel {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lbl_length.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_length.setText("At least 12 characters");
+        lbl_length.setText("At least 12 characters and at most 32 characters");
 
         lbl_uppercase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_uppercase.setText("At least one uppercase letter [A-Z]");
@@ -137,14 +137,14 @@ public class Register extends javax.swing.JPanel {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(SecQuestionFld, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(passwordFld, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(usernameFld, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(confpassFld, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl_length, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                                    .addComponent(lbl_uppercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lbl_lowercase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,10 +253,11 @@ public class Register extends javax.swing.JPanel {
     
     String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
     
-    if(str.length() >= 12){
+    if(str.length() >= 12 && str.length() <= 32){
         lengthFlag = true;
         lbl_length.setForeground(Color.green.darker());
     }
+    
     for(int i=0;i < str.length();i++) {
         ch = str.charAt(i);
         if(Character.isWhitespace(ch)){

@@ -228,7 +228,8 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "PURCHASE PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(stockFld.getText());
+                if(sqlite.DEBUG_MODE == 0)
+                    System.out.println(stockFld.getText());
                 
                 int purchase = Integer.parseInt(stockFld.getText());
                 int current_stock = Integer.parseInt(tableModel.getValueAt(table.getSelectedRow(), 1).toString());

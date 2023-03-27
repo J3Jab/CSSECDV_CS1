@@ -6,6 +6,7 @@
 package View;
 
 import Controller.SQLite;
+import Controller.Secure;
 import Model.User;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -27,7 +28,8 @@ public class MgmtUser extends javax.swing.JPanel {
     
     // added
     public User user;
-//    public Frame frame;
+    public Frame frame;
+    public Secure secure;
     
     public MgmtUser(SQLite sqlite) {
         initComponents();
@@ -78,7 +80,6 @@ public class MgmtUser extends javax.swing.JPanel {
                     "********", 
                     users.get(nCtr).getRole(), 
                     users.get(nCtr).getLocked()});
-//                    System.out.println("hi");
                 }  
             }
 
@@ -215,18 +216,46 @@ public class MgmtUser extends javax.swing.JPanel {
                 "EDIT USER ROLE", JOptionPane.QUESTION_MESSAGE, null, options, options[(int)tableModel.getValueAt(table.getSelectedRow(), 2) - 1]);
             
             if(result != null){
-                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
-                System.out.println(result.charAt(0));
+                if(sqlite.DEBUG_MODE == 1){
+                   System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                   System.out.println(result.charAt(0)); 
+                }
+                
+                
+                User temp_user = sqlite.getUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                // TODO: can you change your own role??
+                
+                // cannot change role of locked account
+                if(temp_user.getLocked() == 1)
+                    JOptionPane.showMessageDialog(null, "Cannot change role of locked account", "Error: Locked Account", JOptionPane.ERROR_MESSAGE);
+                else{
+                   temp_user.setRole(Integer.parseInt(String.valueOf(result.charAt(0))));
+                    //if role is 1, lock account
+                    if(Integer.parseInt(String.valueOf(result.charAt(0))) == 1){
+                        temp_user.setLocked(1);
+                    }
+                    sqlite.updateUser(temp_user); 
+                }
+                
+                
             }
         }
     }//GEN-LAST:event_editRoleBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+
         if(table.getSelectedRow() >= 0){
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE USER", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
-                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                if(sqlite.DEBUG_MODE == 1)
+                    System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0)); 
+                
+                if(!user.getUsername().equals(tableModel.getValueAt(table.getSelectedRow(), 0)))
+                    sqlite.removeUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                else
+                    JOptionPane.showMessageDialog(null, "Cannot delete own account", "Error", JOptionPane.ERROR_MESSAGE);
+                this.init();
             }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
@@ -241,11 +270,20 @@ public class MgmtUser extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to " + state + " " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE USER", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
-                System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                if(sqlite.DEBUG_MODE == 1)
+                    System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
+                User temp_user = sqlite.getUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                if(temp_user.getLocked() == 0)
+                    temp_user.setLocked(1);
+                else if(temp_user.getLocked() == 1)
+                    temp_user.setLocked(0);
+                
+                //TODO: can you lock your own account??
+                sqlite.updateUser(temp_user);
             }
         }
     }//GEN-LAST:event_lockBtnActionPerformed
-
+    // TODO
     private void chgpassBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chgpassBtnActionPerformed
         if(table.getSelectedRow() >= 0){
             JTextField password = new JPasswordField();
@@ -260,8 +298,40 @@ public class MgmtUser extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "CHANGE PASSWORD", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
             
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(password.getText());
-                System.out.println(confpass.getText());
+                
+                boolean resetFlag = false;
+                User temp_user = sqlite.getUser(tableModel.getValueAt(table.getSelectedRow(), 0).toString());
+                if(sqlite.DEBUG_MODE == 1){
+                   System.out.println(password.getText());
+                    System.out.println(confpass.getText()); 
+                }
+                
+                
+                if(password.getText().isEmpty() || confpass.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Error: one or more fields are empty", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!chkIfSame(password.getText(), confpass.getText())){
+                    JOptionPane.showMessageDialog(null, "Error: password and confirm password are not the same", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (!checkString(password.getText())){
+                    JOptionPane.showMessageDialog(null, "Error: password does not meet requirements", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(temp_user.getPassword().equals(secure.encrypt(password.getText()))){
+                    JOptionPane.showMessageDialog(null, "Error: new password should not be the same as old password.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    temp_user.setPassword(secure.encrypt(password.getText()));
+                    sqlite.updateUser(temp_user);
+                    sqlite.addLogs("PASSWORD UPDATE SUCCESS", temp_user.getUsername(), "Reset password successful", null);
+                    password.setText("");
+                    confpass.setText("");
+                    JOptionPane.showMessageDialog(null, "Password changed successfully!");
+                    resetFlag = true;
+                }
+
+                if(!resetFlag){
+                    frame.main.sqlite.addLogs("PASSWORD UPDATE FAIL", temp_user.getUsername(), "Reset password Failure", null);
+                }
             }
         }
     }//GEN-LAST:event_chgpassBtnActionPerformed
@@ -270,6 +340,46 @@ public class MgmtUser extends javax.swing.JPanel {
     public void getUser(User user){
         this.user = user;
     }
+    
+    public boolean chkIfSame(String first, String second){
+        return(first.equals(second));
+    }
+    
+    private boolean checkString(String str) {
+    char ch;
+    boolean upperCaseFlag = false;
+    boolean lowerCaseFlag = false;
+    boolean numberFlag = false;
+    boolean lengthFlag = false;
+    boolean specialFlag = false;
+    
+    String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
+    
+    if(str.length() >= 12 && str.length() <= 32){
+        lengthFlag = true;
+    }
+    for(int i=0;i < str.length();i++) {
+        ch = str.charAt(i);
+        if(Character.isDigit(ch)) {
+            numberFlag = true;
+        }
+        if (Character.isUpperCase(ch)) {
+            upperCaseFlag = true;
+        } 
+        if (Character.isLowerCase(ch)) {
+            lowerCaseFlag = true;
+        } 
+        
+        if(specialCharactersString.contains(Character.toString(ch))) {
+            specialFlag = true;
+        }
+    }
+    
+    if(numberFlag && upperCaseFlag && lowerCaseFlag && lengthFlag && specialFlag)
+        return true;
+    else
+        return false;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chgpassBtn;
@@ -279,4 +389,5 @@ public class MgmtUser extends javax.swing.JPanel {
     private javax.swing.JButton lockBtn;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
 }
