@@ -206,7 +206,7 @@ public class ForgetPword extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error: new password should not be the same as old password.", "Error: Forget Password", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            frame.updateUser(user.getUsername(), secure.encrypt(passwordFld.getText()), user.getRole(), user.getLocked(), user.getSecQuestion(), user.getSecAnswer(), user.getFailLog());
+            frame.updateUser(user.getUsername(), secure.encrypt(passwordFld.getText()), user.getRole(), user.getLocked(), user.getSecQuestion(), user.getSecAnswer(), user.getSessionID());
             frame.main.sqlite.addLogs("PASSWORD UPDATE SUCCESS", user.getUsername(), "Reset password successful", null);
             passwordFld.setText("");
             confpassFld.setText("");

@@ -336,29 +336,28 @@ public class SQLite {
         return logs;
     }
     
-    public ArrayList<Logs> getUserLogs(String username, String event){
-        String sql = "SELECT id, event, username, desc, timestamp FROM logs where username=? AND event=?";
-        ArrayList<Logs> logs = new ArrayList<Logs>();
-        
-        try {
-            Connection conn = DriverManager.getConnection(driverURL);
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, event);
-                
-            ResultSet rs = pstmt.executeQuery();
-            
-            while (rs.next()) {
-                logs.add(new Logs(rs.getInt("id"),
-                                   rs.getString("event"),
-                                   rs.getString("username"),
-                                   rs.getString("desc"),
-                                   rs.getString("timestamp")));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public ArrayList<Logs> getUserLogs(String username){
+    String sql = "SELECT id, event, username, desc, timestamp FROM logs where username=?";
+    ArrayList<Logs> logs = new ArrayList<Logs>();
+
+    try {
+        Connection conn = DriverManager.getConnection(driverURL);
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, username);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            logs.add(new Logs(rs.getInt("id"),
+                               rs.getString("event"),
+                               rs.getString("username"),
+                               rs.getString("desc"),
+                               rs.getString("timestamp")));
         }
-        return logs;
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+    return logs;
     }
     
     public ArrayList<Product> getProduct(){
@@ -382,7 +381,7 @@ public class SQLite {
     }
     
     public ArrayList<User> getUsers(){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, FailLog FROM users";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users";
         ArrayList<User> users = new ArrayList<User>();
         
         try (Connection conn = DriverManager.getConnection(driverURL);
@@ -397,7 +396,7 @@ public class SQLite {
                                    rs.getInt("locked"),
                                    rs.getString("SecQuestion"),
                                    rs.getString("SecAnswer"),
-                                    rs.getInt("FailLog")));
+                                    rs.getString("SessionID")));
             }
         } catch (Exception ex) {}
         return users;
@@ -427,8 +426,8 @@ public class SQLite {
         }
     }
     
-    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
-        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, FailLog=? WHERE username=?";
+    public void updateUser(String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID){
+        String sql = "UPDATE users SET password=?, role=?, locked=?, SecQuestion=?, SecAnswer=?, SessionID=? WHERE username=?";
             
         try{
             Connection conn = DriverManager.getConnection(driverURL);
@@ -438,7 +437,7 @@ public class SQLite {
             pstmt.setInt(3, locked);
             pstmt.setString(4, SecQuestion);
             pstmt.setString(5, SecAnswer);
-            pstmt.setInt(6, FailLog);
+            pstmt.setString(6, SessionID);
             pstmt.setString(7, username);
             pstmt.executeUpdate();
             
@@ -448,7 +447,7 @@ public class SQLite {
     }
     
     public boolean checkUser(String username, String password){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, FailLog FROM users WHERE username=? AND password=?";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=? AND password=?";
         User user = new User();
             
         try{
@@ -466,7 +465,7 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getInt("FailLog"));
+                        rs.getString("SessionID"));
             }
             if(user.getId() != 0)
                 return true;
@@ -478,7 +477,7 @@ public class SQLite {
     }
     
     public boolean checkIfUsernameTaken(String username){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, FailLog FROM users WHERE username=? COLLATE NOCASE";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=? COLLATE NOCASE";
         User user = new User();
             
         try{
@@ -495,7 +494,7 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getInt("FailLog"));
+                        rs.getString("SessionID"));
             }
             if(user.getId() != 0)
                 return true;
@@ -507,7 +506,7 @@ public class SQLite {
     }
     
     public User getUser(String username){
-        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, FailLog FROM users WHERE username=?";
+        String sql = "SELECT id, username, password, role, locked, SecQuestion, SecAnswer, SessionID FROM users WHERE username=?";
         User user = new User();
             
         try{
@@ -524,7 +523,7 @@ public class SQLite {
                         rs.getInt("locked"),
                         rs.getString("SecQuestion"),
                         rs.getString("SecAnswer"),
-                        rs.getInt("FailLog"));
+                        rs.getString("SessionID"));
             }
             if(user.getId() != 0)
                 return user;

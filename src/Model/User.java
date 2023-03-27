@@ -8,8 +8,8 @@ public class User {
     private int locked = 0;
     private String SecQuestion;
     private String SecAnswer;
-    private int FailLog;
-    private int session_id;
+    private String SessionID;
+    
 //    private Product product[]; 
     
     
@@ -22,7 +22,7 @@ public class User {
         this.password = password;
     }
     
-    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer, int FailLog){
+    public User(int id, String username, String password, int role, int locked, String SecQuestion, String SecAnswer, String SessionID){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -30,17 +30,8 @@ public class User {
         this.locked = locked;
         this.SecQuestion = SecQuestion;
         this.SecAnswer = SecAnswer;
-        this.FailLog = FailLog;
+        this.SessionID = SessionID;
     }
-    
-    public int getSessionId() {
-        return session_id;
-    }
-
-    public void setSessionId(int session_id) {
-        this.session_id = session_id;
-    }
-    
 //    public Product getProduct() {
 //        return product[];
 //    }
@@ -105,12 +96,12 @@ public class User {
         this.SecAnswer = SecAnswer;
     }
  
-    public int getFailLog() {
-        return FailLog;
+    public String getSessionID() {
+        return SessionID;
     }
 
-    public void setFailLog(int FailLog) {
-        this.FailLog = FailLog;
+    public void setSessionID(String SessionID) {
+        this.SessionID = SessionID;
     }
     
 }

@@ -125,10 +125,30 @@ public class Login extends javax.swing.JPanel {
             User user = frame.main.sqlite.getUser(usernameFld.getText());
             ArrayList<Logs> logs = new ArrayList<Logs>();
             if(user != null){
-                logs = frame.main.sqlite.getUserLogs(usernameFld.getText(), "LOGIN FAIL");
-                if(logs.size() >= 5){
+                logs = frame.main.sqlite.getUserLogs(usernameFld.getText());
+                int failCtr = 0;
+                boolean hasLogin = false;
+                for(int i = logs.size() - 1; i >= 0; i--){
+                    
+                    System.out.println(logs.get(i).getEvent());
+                    if(logs.get(i).getEvent().equals("LOGIN FAIL")){
+                        failCtr++;
+                    }
+                    
+                    else if(logs.get(i).getEvent().equals("LOGIN SUCCESS")){
+                        hasLogin = true;
+                        failCtr = 0;
+                        break;
+                    }
+                        
+                    if(failCtr >= 5){
+                        break;
+                    }
+                }
+                
+                if(!hasLogin && failCtr >= 5){
                     frame.main.sqlite.updateUser(usernameFld.getText(), user.getPassword(), user.getRole(), 1, 
-                            user.getSecQuestion(), user.getSecAnswer(), user.getFailLog());
+                            user.getSecQuestion(), user.getSecAnswer(), user.getSessionID());
                 }           
             }
             JOptionPane.showMessageDialog(null, "Invalid Username and password combination", "Error: Login", JOptionPane.ERROR_MESSAGE);
