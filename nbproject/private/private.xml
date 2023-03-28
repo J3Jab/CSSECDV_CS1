@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Login.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Verify.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Register.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/EnterUsername.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/Frame.java</file>
-            <file>file:/C:/Users/Admin/Desktop/Github/CSSECDV_CS1/src/View/ForgetPword.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/MgmtProduct.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/Frame.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/Model/User.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/ClientHome.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/Register.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/Controller/SQLite.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/Controller/Main.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/Login.java</file>
+            <file>file:/C:/Users/Paolo%20Montecillo/Downloads/CSSECDV_CS1/src/View/MgmtHistory.java</file>
         </group>
     </open-files>
 </project-private>

@@ -6,6 +6,7 @@
 package View;
 //[255,102,51]
 import Controller.SQLite;
+import Controller.Secure;
 import Model.History;
 import Model.Logs;
 import Model.Product;

@@ -52,6 +52,10 @@ public class MgmtHistory extends javax.swing.JPanel {
             tableModel.removeRow(0);
         }
         
+        if (user.getRole() == 2) {
+            searchBtn.setText("SEARCH PRODUCT");
+        }  
+        
 //      LOAD CONTENTS
         ArrayList<History> history = sqlite.getHistory();
         for(int nCtr = 0; nCtr < history.size(); nCtr++){
